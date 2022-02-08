@@ -17,7 +17,7 @@ $this->title = 'My Yii Application';
                         <h1 class="header-titulo">Vista general</h1>
                     </div>
                     <div class="col-auto">
-                        <button type="button" class="shadow lift btn btn-primary ">Añadir comandas <?=Icon::show('pen', ['class' => 'fa-solid is-button ', 'framework' => Icon::FAS])?></button>
+                        <button type="button" class="shadow lift btn btn-primary">Añadir comandas <?=Icon::show('pen', ['class' => 'fa-solid is-button ', 'framework' => Icon::FAS])?></button>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@ $this->title = 'My Yii Application';
         <div class="row row-space">
             <!--CONTENEDOR 1-->
             <div class="col-xl col-md-6 col-12">
-                <div class="card shadow">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 class="text-uppercase text-muted mb-2 text-left">Ventas totales</h6>
                         <div class="align-items-center row">
@@ -45,7 +45,7 @@ $this->title = 'My Yii Application';
             </div>
             <!--CONTENEDOR 2-->
             <div class="col-xl col-md-6 col-12">
-                <div class="card shadow">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 class="text-uppercase text-muted mb-2 text-left">Gastos totales</h6>
                         <div class="align-items-center row">
@@ -61,7 +61,7 @@ $this->title = 'My Yii Application';
             </div>
             <!--CONTENEDOR 3-->
             <div class="col-xl col-md-6 col-12">
-                <div class="card shadow">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 class="text-uppercase text-muted mb-2 text-left">Ventas mensuales</h6>
                         <div class="align-items-center row">
@@ -77,7 +77,7 @@ $this->title = 'My Yii Application';
             </div>
             <!--CONTENEDOR 4-->
             <div class="col-xl col-md-6 col-12">
-                <div class="card shadow">
+                <div class="card shadow-sm">
                     <div class="card-body">
                         <h6 class="text-uppercase text-muted mb-2 text-left">Gastos mensuales</h6>
                         <div class="align-items-center row">
@@ -96,8 +96,8 @@ $this->title = 'My Yii Application';
     <!--INICIO DEL CONTENEDOR PARA ALOJAR LA TABLA CON LAS ULTIMAS COMANDAS-->
         <div class="row row-space">
             <div class="col-12">
-                <div class="card shadow">
-                    <div class="card-header">
+                <div class="card shadow-sm">
+                    <div class="card-body">
                         <h4 class="card-header-title">Productos bajos de stock</h4>
                     </div>
                     <div class="table-responsive"></div>
@@ -106,8 +106,8 @@ $this->title = 'My Yii Application';
         </div>
         <div class="row row-space">
             <div class="col-12">
-                <div class="card shadow">
-                    <div class="card-header">
+                <div class="card shadow-sm">
+                    <div class="card-body">
                         <h4 class="card-header-title">Últimas comandas</h4>
                     </div>
                     <div class="table-responsive"></div>
@@ -116,8 +116,8 @@ $this->title = 'My Yii Application';
         </div>
         <div class="row row-space">
             <div class="col-12">
-                <div class="card shadow">
-                    <div class="card-header">
+                <div class="card shadow-sm">
+                    <div class="card-body">
                         <h4 class="card-header-title">Lo mas demandado</h4>
                     </div>
                     <div class="table-responsive"></div>

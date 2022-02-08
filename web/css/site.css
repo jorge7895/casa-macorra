@@ -113,28 +113,10 @@ a.desc:after {
     padding-bottom: 2.5rem;
 }
 
-#sidebar {
-    min-width: 270px;
-    max-width: 270px;
-    background: #004139;
-    color:#FAFAFA;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-#content {
-    width: 100%;
-    padding: 0;
-    min-height: 100vh;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
 .nav-text{
     color:#fff;
     text-align:center;
+    font-size: 16px;
 }
 
 .nav-items{
@@ -142,6 +124,92 @@ a.desc:after {
     align-items: center;
 }
 
-.logo{
-    
+/*Propiedades animadas para los botones*/
+.btn-primary,
+.btn-primary:visited{
+    background-color: #004139 !important;
+    border-color: #004139 !important;
+    box-shadow: 0 0.2rem 0.27rem rgb(0 0 0 / 15%) !important;
 }
+
+.btn-primary:hover{
+    background-color: #00594d !important;
+    border-color: #00594d !important;
+    border: 0.1rem solid #00594d !important;
+    box-shadow: 0 0.3rem 0.5rem rgb(0 0 0 / 15%) !important;
+}
+
+.btn-primary:active{
+    background-color: #00594d !important;
+    border: 1px solid #00594d !important;
+    box-shadow: 0 0.2rem 0.27rem rgb(0 0 0 / 15%) !important;
+}
+
+#toggle {
+    display: none;
+}
+
+#toggle:checked ~ .leftbar {
+    max-width: 120px;
+}
+
+#toggle:checked ~ #content {
+    width: 95%;
+}
+
+#toggle:checked ~ .buton-sidebar {
+    left: 85px;
+    -webkit-transform: rotate(180deg); 
+    -moz-transform: rotate(180deg);
+}
+
+
+#content {
+    min-width: 80%;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.leftbar {
+    max-width: 300px;
+    height: 100%;
+    background: #004139;
+    box-shadow: 0 0.2rem 0.27rem rgb(0 0 0 / 15%);    
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+
+.buton-sidebar {
+    position:absolute;
+    cursor: pointer;
+    font-weight: 800;
+    height: 40px;
+    color:#FAFAFA;
+    margin-top: 5px;
+    padding: 0.5rem;
+    left: 16rem;
+    -webkit-transition: all 0.3s;
+}
+
+body{
+    font-family: 'roboto';
+}
+
+a:hover {
+    color: #ffffff;
+}
+
+
+
+@media screen and (max-width: 480px){
+    .buton-sidebar {
+        left: 85px;
+    }
+}
+
+@media screen and (max-width: 1480px){
+    .buton-sidebar {
+        left: 16%;
+    }
+}
+
