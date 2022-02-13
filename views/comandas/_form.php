@@ -16,12 +16,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'precio_total')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_plato')->textInput() ?>
+    <?= $form->field($model, 'id_plato')->dropDownList($model->getdropdownPlato()) ?>
 
     <?= $form->field($model, 'cantidad')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'shadow lift btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

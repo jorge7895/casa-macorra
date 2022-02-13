@@ -20,8 +20,7 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "thoulah/yii2-fontawesome-inline": "^1.1",
         "rmrevin/yii2-fontawesome": "2.10.*",
-        "kartik-v/yii2-icons": "^1.4",
-        "kartik-v/yii2-widget-sidenav": "dev-master"
+        "kartik-v/yii2-icons": "^1.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

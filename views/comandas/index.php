@@ -1,25 +1,42 @@
 <?php
 
-use yii\helpers\Html;
+
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-
+use kartik\icons\Icon;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Comandas';
-$this->params['breadcrumbs'][] = $this->title;
+Icon::map($this, Icon::FA);
+
+$model = new \app\models\Comandas;
 ?>
 <div class="comandas-index">
+    <div class="header">
+        <div class="container-fluid">
+            <div class="header-body">
+                <div class="row align-items-end row">
+                    <div class="col">
+                        <h1 class="header-titulo">Comandas</h1>
+                    </div>
+                    <div class="col-auto">
+                        <?php
+                        /*
+                        aqui creamos un boton que nos abre un modal (ventana emergente) que nos permite crear platos
+                        */
+                            yii\bootstrap4\Modal::begin([
+                                'id'=>'modal',
+                                'size'=>'modal-lg',
+                                'toggleButton' => (['label' => 'Añadir comanda','class' => 'shadow lift btn btn-primary']),
+                            ]);
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Comandas', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
+                            echo $this->renderAjax('create',['model'=>$model]);
+                            yii\bootstrap4\Modal::end();
+                        ?>
+                    </div>
+                </div>
+            </div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -32,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'cantidad',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Comandas $model, $key, $index, $column) {
+                'urlCreator' => function ($action, $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
@@ -40,4 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
 
+        </div>
+    </div>
 </div>

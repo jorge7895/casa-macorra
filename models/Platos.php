@@ -37,9 +37,9 @@ class Platos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre'], 'required'],
+            [['nombre','precio_publico', 'coste'], 'required'],
             [['precio_publico', 'coste'], 'number'],
-            [['nombre', 'categoria'], 'string', 'max' => 200],
+            [['nombre'], 'string', 'max' => 200],
         ];
     }
 
@@ -49,10 +49,10 @@ class Platos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'nombre' => 'Nombre',
+            'id' => 'Código',
+            'nombre' => 'Nombre del plato',
             'categoria' => 'Categoria',
-            'precio_publico' => 'Precio Publico',
+            'precio_publico' => 'Precio Público',
             'coste' => 'Coste',
         ];
     }
@@ -125,5 +125,11 @@ class Platos extends \yii\db\ActiveRecord
     public function getProductos()
     {
         return $this->hasMany(Productos::className(), ['id' => 'id_producto'])->viaTable('platos_r_productos', ['id_plato' => 'id']);
+    }
+    
+    public function getdropdownGuarniciones(){
+        $models = Guarniciones::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
     }
 }

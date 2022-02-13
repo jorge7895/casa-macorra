@@ -34,7 +34,7 @@ class Comandas extends \yii\db\ActiveRecord
     {
         return [
             [['fecha'], 'safe'],
-            [['precio_total'], 'number'],
+            [['precio_total'], 'double'],
             [['id_plato', 'cantidad'], 'integer'],
             [['id_plato'], 'exist', 'skipOnError' => true, 'targetClass' => Platos::className(), 'targetAttribute' => ['id_plato' => 'id']],
         ];
@@ -49,7 +49,7 @@ class Comandas extends \yii\db\ActiveRecord
             'id' => 'ID',
             'fecha' => 'Fecha',
             'precio_total' => 'Precio Total',
-            'id_plato' => 'Id Plato',
+            'id_plato' => 'Plato',
             'cantidad' => 'Cantidad',
         ];
     }
@@ -83,4 +83,11 @@ class Comandas extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PlatosRComandas::className(), ['id_comanda' => 'id']);
     }
+    
+    public function getdropdownPlato(){
+        $models = Platos::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+    }
+    
 }
