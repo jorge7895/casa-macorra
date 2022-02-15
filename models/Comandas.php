@@ -34,7 +34,7 @@ class Comandas extends \yii\db\ActiveRecord
     {
         return [
             [['fecha'], 'safe'],
-            [['precio_total'], 'double'],
+            [['precio_total'], 'double','message'=>'Los decimales deben esta separados por un punto'],
             [['id_plato', 'cantidad'], 'integer'],
             [['id_plato'], 'exist', 'skipOnError' => true, 'targetClass' => Platos::className(), 'targetAttribute' => ['id_plato' => 'id']],
         ];

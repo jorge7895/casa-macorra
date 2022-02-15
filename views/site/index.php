@@ -22,7 +22,7 @@ $this->title = 'My Yii Application';
                 </div>
                 <div class="col-auto">
                     <!--Boton que al pulsarlo nos abre un modal para añadir comandas-->
-                    <?= Html::button("Añadir comanda",['value'=>Url::to(['../comandas/create']),'class' => 'shadow lift btn btn-primary','id'=>'modalButton']) ?>
+                    <?= Html::button("Añadir comanda ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['../comandas/create']),'class' => 'shadow lift btn btn-primary','id'=>'modalButton']) ?>
                     <?php
                         yii\bootstrap4\Modal::begin([
                            'id'     =>'modal',

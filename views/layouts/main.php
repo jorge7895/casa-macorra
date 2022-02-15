@@ -33,34 +33,24 @@ AppAsset::register($this);
             <?= Html::img('@web/images/logonav.png', ['alt' => 'Logo','class'=>'img-fluid pt-5']) ?>
             <ul class="list-unstyled">
             <li class="active nav-items pt-3">
-                <a class="nav-link nav-text text-uppercase pl-2"role="button" href="../site/index">
-                    <p class=""><?= Icon::show('home', ['class' => 'fa-solid', 'framework' => Icon::FAS])?> Vista general</p>
-                </a>
+                <?= Html::a(Icon::show('home', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Vista General", ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
             </li>
             <li class="active nav-items ">
-                <a class="nav-link nav-text text-uppercase pl-2" data-toggle="dropdown" role="button">
-                    <p class=""><?= Icon::show('box-open', ['class' => 'fa-solid', 'framework' => Icon::FAS]) ?> Productos <?= Icon::show('sort-down', ['class' => 'fa-solid', 'framework' => Icon::FAS]) ?></p>
-                </a>
+                <?= Html::a(Icon::show('box-open', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Productos  ".Icon::show('sort-down', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2','data-toggle'=>'dropdown']) ?>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="../platos/index">Platos</a>
-                <a class="dropdown-item" href="../productos/index">Productos</a>
-                <a class="dropdown-item" href="../guarniciones/index">Guarniciones</a>
+                  <?= Html::a("Platos", ['platos/index'], ['class' => 'dropdown-item']) ?>
+                  <?= Html::a("Productos", ['productos/index'], ['class' => 'dropdown-item']) ?>
+                  <?= Html::a("Guarniciones", ['guarniciones/index'], ['class' => 'dropdown-item']) ?>
               </div>
             </li>
             <li class="active nav-items ">
-                <a class="nav-link nav-text text-uppercase pl-2"role="button" href="../comandas/index">
-                    <p class=""><?=Icon::show('edit', ['class' => 'fa-solid', 'framework' => Icon::FAS])?> Comandas</p>
-                </a>
+                <?= Html::a(Icon::show('edit', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Comandas", ['comandas/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
             </li>
             <li class="active nav-items ">
-                <a class="nav-link nav-text text-uppercase pl-2"role="button" href="../pedidos/index">
-                    <p class=""><?= Icon::show('shopping-cart', ['class' => 'fa-solid', 'framework' => Icon::FAS])?> Pedidos</p>
-                </a>
+                <?= Html::a(Icon::show('shopping-cart', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Pedidos", ['pedidos/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
             </li>
             <li class="active nav-items ">
-                <a class="nav-link nav-text text-uppercase pl-2"role="button" href="../proveedores/index">
-                    <p class=""><?= Icon::show('address-book', ['class' => 'fa-solid', 'framework' => Icon::FAS])?> Proveedores</p>
-                </a>
+                <?= Html::a(Icon::show('address-book', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Proveedores", ['proveedores/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
             </li>
 
             </ul>
