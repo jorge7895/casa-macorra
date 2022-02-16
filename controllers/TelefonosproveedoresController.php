@@ -9,9 +9,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * TelefonosproveedoresController implements the CRUD actions for TelefonosProveedores model.
+ * TelefonosProveedoresController implements the CRUD actions for TelefonosProveedores model.
  */
-class TelefonosproveedoresController extends Controller
+class TelefonosProveedoresController extends Controller
 {
     /**
      * @inheritDoc
@@ -87,7 +87,7 @@ class TelefonosproveedoresController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }

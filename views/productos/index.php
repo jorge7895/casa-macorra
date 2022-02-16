@@ -4,41 +4,22 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use kartik\icons\Icon;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-Icon::map($this, Icon::FA);
-
-$model = new \app\models\Productos;
+$this->title = 'Productos';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="productos-index">
-    <div class="header">
-        <div class="container-fluid">
-            <div class="header-body">
-                <div class="row align-items-end row">
-                    <div class="col">
-                        <h1 class="header-titulo">Productos</h1>
-                    </div>
-                    <div class="col-auto">
-                        <?php
-                        /*
-                        aqui creamos un boton que nos abre un modal (ventana emergente) que nos permite crear platos
-                        */
-                            yii\bootstrap4\Modal::begin([
-                                'id'=>'modal',
-                                'size'=>'modal-lg',
-                                'toggleButton' => (['label' => 'Crear plato','class' => 'shadow lift btn btn-primary']),
-                            ]);
 
-                            echo $this->renderAjax('create',['model'=>$model]);
-                            yii\bootstrap4\Modal::end();
-                        ?>
-                    </div>
-                </div>
-            </div>
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Create Productos', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -47,17 +28,15 @@ $model = new \app\models\Productos;
             'id',
             'stock',
             'nombre',
-            'id_pedido',
             'precio_compra',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Productos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
         ],
     ]); ?>
 
-        </div>
-    </div>
+
 </div>

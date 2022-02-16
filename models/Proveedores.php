@@ -12,8 +12,7 @@ use Yii;
  * @property string $nombre
  *
  * @property Pedidos[] $pedidos
- * @property Productos[] $productos
- * @property ProductosRProveedores[] $productosRProveedores
+ * @property ProductosDeProveedores[] $productosDeProveedores
  * @property TelefonosProveedores[] $telefonosProveedores
  */
 class Proveedores extends \yii\db\ActiveRecord
@@ -37,7 +36,7 @@ class Proveedores extends \yii\db\ActiveRecord
             [['nombre'], 'string', 'max' => 150],
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -61,23 +60,13 @@ class Proveedores extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Productos]].
+     * Gets query for [[ProductosDeProveedores]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProductos()
+    public function getProductosDeProveedores()
     {
-        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])->viaTable('productos_r_proveedores', ['id_proveedor' => 'id']);
-    }
-
-    /**
-     * Gets query for [[ProductosRProveedores]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductosRProveedores()
-    {
-        return $this->hasMany(ProductosRProveedores::className(), ['id_proveedor' => 'id']);
+        return $this->hasMany(ProductosDeProveedores::className(), ['id_proveedor' => 'id']);
     }
 
     /**

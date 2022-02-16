@@ -9,10 +9,11 @@ use Yii;
  *
  * @property int $id
  * @property string|null $fecha
+ * @property int|null $id_producto
  * @property int|null $id_proveedor
  * @property int|null $descuento
  *
- * @property Productos[] $productos
+ * @property Productos $producto
  * @property Proveedores $proveedor
  */
 class Pedidos extends \yii\db\ActiveRecord
@@ -32,7 +33,8 @@ class Pedidos extends \yii\db\ActiveRecord
     {
         return [
             [['fecha'], 'safe'],
-            [['id_proveedor', 'descuento'], 'integer'],
+            [['id_producto', 'id_proveedor', 'descuento'], 'integer'],
+            [['id_producto'], 'exist', 'skipOnError' => true, 'targetClass' => Productos::className(), 'targetAttribute' => ['id_producto' => 'id']],
             [['id_proveedor'], 'exist', 'skipOnError' => true, 'targetClass' => Proveedores::className(), 'targetAttribute' => ['id_proveedor' => 'id']],
         ];
     }
@@ -45,19 +47,20 @@ class Pedidos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'fecha' => 'Fecha',
+            'id_producto' => 'Id Producto',
             'id_proveedor' => 'Id Proveedor',
             'descuento' => 'Descuento',
         ];
     }
 
     /**
-     * Gets query for [[Productos]].
+     * Gets query for [[Producto]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProductos()
+    public function getProducto()
     {
-        return $this->hasMany(Productos::className(), ['id_pedido' => 'id']);
+        return $this->hasOne(Productos::className(), ['id' => 'id_producto']);
     }
 
     /**

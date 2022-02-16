@@ -11,10 +11,8 @@ use Yii;
  * @property string $nombre
  * @property float|null $coste
  *
- * @property GuarnicionesRProductos[] $guarnicionesRProductos
- * @property Platos[] $platos
- * @property PlatosRGuarniciones[] $platosRGuarniciones
- * @property Productos[] $productos
+ * @property GuarnicionesEnPlatos[] $guarnicionesEnPlatos
+ * @property ProductosEnGuarniciones[] $productosEnGuarniciones
  */
 class Guarniciones extends \yii\db\ActiveRecord
 {
@@ -51,42 +49,22 @@ class Guarniciones extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[GuarnicionesRProductos]].
+     * Gets query for [[GuarnicionesEnPlatos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGuarnicionesRProductos()
+    public function getGuarnicionesEnPlatos()
     {
-        return $this->hasMany(GuarnicionesRProductos::className(), ['id_guarnicion' => 'id']);
+        return $this->hasMany(GuarnicionesEnPlatos::className(), ['id_guarnicion' => 'id']);
     }
 
     /**
-     * Gets query for [[Platos]].
+     * Gets query for [[ProductosEnGuarniciones]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPlatos()
+    public function getProductosEnGuarniciones()
     {
-        return $this->hasMany(Platos::className(), ['id' => 'id_plato'])->viaTable('platos_r_guarniciones', ['id_guarnicion' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlatosRGuarniciones]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatosRGuarniciones()
-    {
-        return $this->hasMany(PlatosRGuarniciones::className(), ['id_guarnicion' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Productos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductos()
-    {
-        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])->viaTable('guarniciones_r_productos', ['id_guarnicion' => 'id']);
+        return $this->hasMany(ProductosEnGuarniciones::className(), ['id_guarnicion' => 'id']);
     }
 }

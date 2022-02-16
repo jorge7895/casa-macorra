@@ -12,10 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'fecha')->textInput() ?>
-
-    <?= $form->field($model, 'precio_total')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'id_plato')->dropDownList($model->getdropdownPlato()) ?>
 
     <?= $form->field($model, 'cantidad')->textInput() ?>

@@ -14,8 +14,6 @@ use Yii;
  * @property int|null $cantidad
  *
  * @property Platos $plato
- * @property Platos[] $platos
- * @property PlatosRComandas[] $platosRComandas
  */
 class Comandas extends \yii\db\ActiveRecord
 {
@@ -34,7 +32,7 @@ class Comandas extends \yii\db\ActiveRecord
     {
         return [
             [['fecha'], 'safe'],
-            [['precio_total'], 'double','message'=>'Los decimales deben esta separados por un punto'],
+            [['precio_total'], 'number'],
             [['id_plato', 'cantidad'], 'integer'],
             [['id_plato'], 'exist', 'skipOnError' => true, 'targetClass' => Platos::className(), 'targetAttribute' => ['id_plato' => 'id']],
         ];
@@ -49,7 +47,7 @@ class Comandas extends \yii\db\ActiveRecord
             'id' => 'ID',
             'fecha' => 'Fecha',
             'precio_total' => 'Precio Total',
-            'id_plato' => 'Plato',
+            'id_plato' => 'Id Plato',
             'cantidad' => 'Cantidad',
         ];
     }
@@ -62,26 +60,6 @@ class Comandas extends \yii\db\ActiveRecord
     public function getPlato()
     {
         return $this->hasOne(Platos::className(), ['id' => 'id_plato']);
-    }
-
-    /**
-     * Gets query for [[Platos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatos()
-    {
-        return $this->hasMany(Platos::className(), ['id' => 'id_plato'])->viaTable('platos_r_comandas', ['id_comanda' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlatosRComandas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatosRComandas()
-    {
-        return $this->hasMany(PlatosRComandas::className(), ['id_comanda' => 'id']);
     }
     
     public function getdropdownPlato(){

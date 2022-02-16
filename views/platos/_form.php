@@ -14,11 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'categoria')->dropDownList($model->getdropdownGuarniciones()) ?>
+    <?= $form->field($model, 'categoria')->dropDownList($model->getdropdownCategoria()) ?>
 
     <?= $form->field($model, 'precio_publico')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'coste')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'shadow lift btn btn-primary']) ?>

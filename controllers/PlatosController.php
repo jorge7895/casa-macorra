@@ -87,11 +87,11 @@ class PlatosController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
-    
+
     /**
      * Updates an existing Platos model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -111,7 +111,7 @@ class PlatosController extends Controller
             'model' => $model,
         ]);
     }
-    
+
     /**
      * Deletes an existing Platos model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

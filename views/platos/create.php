@@ -1,10 +1,13 @@
 <?php
 
 use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Platos */
 
-$this->title = 'Creación de nuevo plato';
+$this->title = 'Create Platos';
+$this->params['breadcrumbs'][] = ['label' => 'Platos', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="platos-create">
 

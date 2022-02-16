@@ -10,16 +10,12 @@ use Yii;
  * @property int $id
  * @property float|null $stock
  * @property string|null $nombre
- * @property int|null $id_pedido
  * @property float|null $precio_compra
  *
- * @property GuarnicionesRProductos[] $guarnicionesRProductos
- * @property Guarniciones[] $guarnicions
- * @property Pedidos $pedido
- * @property Platos[] $platos
- * @property PlatosRProductos[] $platosRProductos
- * @property ProductosRProveedores[] $productosRProveedores
- * @property Proveedores[] $proveedors
+ * @property Pedidos[] $pedidos
+ * @property ProductosDeProveedores[] $productosDeProveedores
+ * @property ProductosEnGuarniciones[] $productosEnGuarniciones
+ * @property ProductosEnPlatos[] $productosEnPlatos
  */
 class Productos extends \yii\db\ActiveRecord
 {
@@ -38,9 +34,7 @@ class Productos extends \yii\db\ActiveRecord
     {
         return [
             [['stock', 'precio_compra'], 'number'],
-            [['id_pedido'], 'integer'],
             [['nombre'], 'string', 'max' => 200],
-            [['id_pedido'], 'exist', 'skipOnError' => true, 'targetClass' => Pedidos::className(), 'targetAttribute' => ['id_pedido' => 'id']],
         ];
     }
 
@@ -53,78 +47,47 @@ class Productos extends \yii\db\ActiveRecord
             'id' => 'ID',
             'stock' => 'Stock',
             'nombre' => 'Nombre',
-            'id_pedido' => 'Id Pedido',
             'precio_compra' => 'Precio Compra',
         ];
     }
 
     /**
-     * Gets query for [[GuarnicionesRProductos]].
+     * Gets query for [[Pedidos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGuarnicionesRProductos()
+    public function getPedidos()
     {
-        return $this->hasMany(GuarnicionesRProductos::className(), ['id_producto' => 'id']);
+        return $this->hasMany(Pedidos::className(), ['id_producto' => 'id']);
     }
 
     /**
-     * Gets query for [[Guarnicions]].
+     * Gets query for [[ProductosDeProveedores]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGuarnicions()
+    public function getProductosDeProveedores()
     {
-        return $this->hasMany(Guarniciones::className(), ['id' => 'id_guarnicion'])->viaTable('guarniciones_r_productos', ['id_producto' => 'id']);
+        return $this->hasMany(ProductosDeProveedores::className(), ['id_producto' => 'id']);
     }
 
     /**
-     * Gets query for [[Pedido]].
+     * Gets query for [[ProductosEnGuarniciones]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPedido()
+    public function getProductosEnGuarniciones()
     {
-        return $this->hasOne(Pedidos::className(), ['id' => 'id_pedido']);
+        return $this->hasMany(ProductosEnGuarniciones::className(), ['id_producto' => 'id']);
     }
 
     /**
-     * Gets query for [[Platos]].
+     * Gets query for [[ProductosEnPlatos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPlatos()
+    public function getProductosEnPlatos()
     {
-        return $this->hasMany(Platos::className(), ['id' => 'id_plato'])->viaTable('platos_r_productos', ['id_producto' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlatosRProductos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatosRProductos()
-    {
-        return $this->hasMany(PlatosRProductos::className(), ['id_producto' => 'id']);
-    }
-
-    /**
-     * Gets query for [[ProductosRProveedores]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductosRProveedores()
-    {
-        return $this->hasMany(ProductosRProveedores::className(), ['id_producto' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Proveedors]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProveedors()
-    {
-        return $this->hasMany(Proveedores::className(), ['id' => 'id_proveedor'])->viaTable('productos_r_proveedores', ['id_producto' => 'id']);
+        return $this->hasMany(ProductosEnPlatos::className(), ['id_producto' => 'id']);
     }
 }

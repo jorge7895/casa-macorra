@@ -27,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'fecha',
+            'id_producto',
             'id_proveedor',
             'descuento',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Pedidos $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

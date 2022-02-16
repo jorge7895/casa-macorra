@@ -16,8 +16,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_pedido')->textInput() ?>
-
     <?= $form->field($model, 'precio_compra')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

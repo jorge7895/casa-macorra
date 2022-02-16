@@ -9,17 +9,14 @@ use Yii;
  *
  * @property int $id
  * @property string $nombre
- * @property string|null $categoria
+ * @property int|null $categoria
  * @property float|null $precio_publico
  * @property float|null $coste
  *
+ * @property Categorias $categoria0
  * @property Comandas[] $comandas
- * @property Comandas[] $comandas0
- * @property Guarniciones[] $guarnicions
- * @property PlatosRComandas[] $platosRComandas
- * @property PlatosRGuarniciones[] $platosRGuarniciones
- * @property PlatosRProductos[] $platosRProductos
- * @property Productos[] $productos
+ * @property GuarnicionesEnPlatos[] $guarnicionesEnPlatos
+ * @property ProductosEnPlatos[] $productosEnPlatos
  */
 class Platos extends \yii\db\ActiveRecord
 {
@@ -37,9 +34,11 @@ class Platos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre','precio_publico', 'coste'], 'required'],
+            [['nombre'], 'required'],
+            [['categoria'], 'integer'],
             [['precio_publico', 'coste'], 'number'],
             [['nombre'], 'string', 'max' => 200],
+            [['categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria' => 'id']],
         ];
     }
 
@@ -49,12 +48,22 @@ class Platos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'Código',
-            'nombre' => 'Nombre del plato',
+            'id' => 'ID',
+            'nombre' => 'Nombre',
             'categoria' => 'Categoria',
-            'precio_publico' => 'Precio Público',
+            'precio_publico' => 'Precio Publico',
             'coste' => 'Coste',
         ];
+    }
+
+    /**
+     * Gets query for [[Categoria0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoria0()
+    {
+        return $this->hasOne(Categorias::className(), ['id' => 'categoria']);
     }
 
     /**
@@ -68,67 +77,27 @@ class Platos extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Comandas0]].
+     * Gets query for [[GuarnicionesEnPlatos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getComandas0()
+    public function getGuarnicionesEnPlatos()
     {
-        return $this->hasMany(Comandas::className(), ['id' => 'id_comanda'])->viaTable('platos_r_comandas', ['id_plato' => 'id']);
+        return $this->hasMany(GuarnicionesEnPlatos::className(), ['id_plato' => 'id']);
     }
 
     /**
-     * Gets query for [[Guarnicions]].
+     * Gets query for [[ProductosEnPlatos]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getGuarnicions()
+    public function getProductosEnPlatos()
     {
-        return $this->hasMany(Guarniciones::className(), ['id' => 'id_guarnicion'])->viaTable('platos_r_guarniciones', ['id_plato' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlatosRComandas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatosRComandas()
-    {
-        return $this->hasMany(PlatosRComandas::className(), ['id_plato' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlatosRGuarniciones]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatosRGuarniciones()
-    {
-        return $this->hasMany(PlatosRGuarniciones::className(), ['id_plato' => 'id']);
-    }
-
-    /**
-     * Gets query for [[PlatosRProductos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPlatosRProductos()
-    {
-        return $this->hasMany(PlatosRProductos::className(), ['id_plato' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Productos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProductos()
-    {
-        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])->viaTable('platos_r_productos', ['id_plato' => 'id']);
+        return $this->hasMany(ProductosEnPlatos::className(), ['id_plato' => 'id']);
     }
     
-    public function getdropdownGuarniciones(){
-        $models = Guarniciones::find()->asArray()->all();
+    public function getdropdownCategoria(){
+        $models = Categorias::find()->asArray()->all();
         
         return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
     }

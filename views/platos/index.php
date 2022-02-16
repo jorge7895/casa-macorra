@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -22,19 +23,16 @@ $model = new \app\models\Platos;
                         <h1 class="header-titulo">Platos</h1>
                     </div>
                     <div class="col-auto">
-                        <?php
-                        /*
-                        aqui creamos un boton que nos abre un modal (ventana emergente) que nos permite crear platos
-                        */
-                            yii\bootstrap4\Modal::begin([
-                                'id'=>'modal',
-                                'size'=>'modal-lg',
-                                'toggleButton' => (['label' => 'Crear plato','class' => 'shadow lift btn btn-primary']),
-                            ]);
-
-                            echo $this->renderAjax('create',['model'=>$model]);
-                            yii\bootstrap4\Modal::end();
-                        ?>
+                    <?= Html::button("Añadir plato ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['../platos/create']),'class' => 'shadow lift btn btn-primary','id'=>'modalButton']) ?>
+                    <?php
+                        yii\bootstrap4\Modal::begin([
+                           'id'     =>'modal',
+                           'size'   =>'modal-md',
+                           'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
+                           ]);
+                        echo "<div id='modalContent'> </div>";
+                        yii\bootstrap4\Modal::end();
+                    ?>
                     </div>
                 </div>
             </div>
@@ -55,6 +53,7 @@ $model = new \app\models\Platos;
                     ],
                 ],
             ]); ?>
+
         </div>
     </div>
 </div>
