@@ -19,13 +19,6 @@ $modelProductos = new app\models\ProductosEnPlatos;
     <?= $form->field($model, 'categoria')->dropDownList($model->getdropdownCategoria()) ?>
 
     <?= $form->field($model, 'precio_publico')->textInput(['maxlength' => true]) ?>
-    
-    
-        <?= $form->field($modelProductos, 'id_plato')->textInput() ?>
-
-    <?= $form->field($modelProductos, 'id_producto')->textInput() ?>
-
-    <?= $form->field($modelProductos, 'gramos_producto')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'shadow lift btn btn-primary']) ?>

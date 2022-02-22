@@ -42,11 +42,15 @@
                         $precio = ArrayHelper::getColumn($model->productos,'precio_compra');
                         $gproducto = ArrayHelper::getColumn($model->productosEnPlatos,'gramos_producto');
                         $total = 0;
-                        for($i=0;$i<count($gproducto);$i++){
-                            $calculo = ($precio[$i] * $gproducto[$i])/1000;
-                            $coste[$i] = number_format($calculo,2);
-                            $total += $coste[$i];
+                        $coste[]=0;
+                        if(count($gproducto)>0){
+                                for($i=0;$i<count($gproducto);$i++){
+                                $calculo = ($precio[$i] * $gproducto[$i])/1000;
+                                $coste[$i] = number_format($calculo,2);
+                                $total += $coste[$i];
+                            }
                         }
+
                     ?>
                     <?= implode('</p><p class="m-0 text-right">',$coste)?>
                 </p>

@@ -44,8 +44,7 @@ class PlatosController extends Controller
     {
         //select p.id, p.nombre, c.nombre, p.precio_publico, p.coste from categorias c inner join platos p on c.id = p.categoria
         $dataProvider = new ActiveDataProvider([
-            'query' => Platos::find()->innerJoin('categorias')
-                ->select(['platos.id','platos.nombre','categorias.nombre categoria','platos.precio_publico','platos.coste']),
+            'query' => Platos::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -71,11 +70,9 @@ class PlatosController extends Controller
      */
     public function actionView($id)
     {
-        $nombreCategoria = Yii::$app->db->createComand("select distinct c.nombre from categorias c where c.id = (select distinct p.id from platos p)")->queryAll();
-        
+      
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'nombreCategoria'=>$nombreCategoria,
         ]);
     }
 
