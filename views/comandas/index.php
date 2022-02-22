@@ -8,7 +8,6 @@ use kartik\icons\Icon;
 
 Icon::map($this, Icon::FA);
 
-$model = new \app\models\Comandas;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 

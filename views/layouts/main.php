@@ -4,7 +4,6 @@
 /* @var $content string */
 use app\assets\FontAsset;
 use app\assets\AppAsset;
-use app\widgets\Alert;
 use yii\bootstrap4\Html;
 use kartik\icons\Icon;
 Icon::map($this, Icon::FA);

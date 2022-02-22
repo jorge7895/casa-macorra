@@ -1,6 +1,12 @@
 <?php
  use yii\helpers\ArrayHelper;
  use yii\helpers\Html;
+ use yii\helpers\Url;
+ 
+ use kartik\icons\Icon;
+
+Icon::map($this, Icon::FA);
+
 ?>
 
 
@@ -45,9 +51,9 @@
                         $coste[]=0;
                         if(count($gproducto)>0){
                                 for($i=0;$i<count($gproducto);$i++){
-                                $calculo = ($precio[$i] * $gproducto[$i])/1000;
-                                $coste[$i] = number_format($calculo,2);
-                                $total += $coste[$i];
+                                    $calculo = ($precio[$i] * $gproducto[$i])/1000;
+                                    $coste[$i] = number_format($calculo,2);
+                                    $total += $coste[$i];
                             }
                         }
 
@@ -56,6 +62,9 @@
                 </p>
             </div>
             
+        </div>
+        <div class="co-12">
+            <?= Html::a('Añadir ingredientes...', ['productos-en-platos/createid','plato'=>$model->id], ['class' => '']) ?>
         </div>
         <hr>
         <div class="row">

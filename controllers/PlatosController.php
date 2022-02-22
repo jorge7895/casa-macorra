@@ -87,7 +87,7 @@ class PlatosController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['receta']);
             }
         } else {
             $model->loadDefaultValues();
@@ -129,7 +129,7 @@ class PlatosController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['receta']);
     }
 
     /**

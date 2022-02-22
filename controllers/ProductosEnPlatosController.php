@@ -87,7 +87,7 @@ class ProductosEnPlatosController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -140,5 +140,23 @@ class ProductosEnPlatosController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionCreateid($plato)
+    {
+        $model = new ProductosEnPlatos();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+            $model->id_plato = $plato;
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 }

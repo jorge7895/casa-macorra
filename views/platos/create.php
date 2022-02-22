@@ -5,13 +5,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Platos */
 
-$this->title = 'Create Platos';
-$this->params['breadcrumbs'][] = ['label' => 'Platos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="platos-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div>
+        <h1>Creación de plato</h1>
+        <h5>Por favor rellene los campos y pulse guardar</h5>
+    </div>
+    
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -70,5 +70,17 @@ class ProductosEnPlatos extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Productos::className(), ['id' => 'id_producto']);
     }
-
+    
+    public function getdropdownProducto(){
+        $models = Productos::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+    }
+    
+    public function getdropdownPlato(){
+        $models = Platos::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+    }
+    
 }

@@ -19,7 +19,9 @@ $modelProductos = new app\models\ProductosEnPlatos;
     <?= $form->field($model, 'categoria')->dropDownList($model->getdropdownCategoria()) ?>
 
     <?= $form->field($model, 'precio_publico')->textInput(['maxlength' => true]) ?>
-
+    
+    
+    
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'shadow lift btn btn-primary']) ?>
     </div>

@@ -8,7 +8,6 @@ use yii\helpers\Url;
 
 Icon::map($this, Icon::FA);
 
-$model = new \app\models\Comandas;
 $this->title = 'My Yii Application';
 ?>
 

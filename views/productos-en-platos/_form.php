@@ -11,15 +11,15 @@ use yii\widgets\ActiveForm;
 <div class="productos-en-platos-form">
 
     <?php $form = ActiveForm::begin(); ?>
+                                                            <!--TODO-->
+    <?= $form->field($model, 'id_plato')->dropDownList($model->getdropdownPlato(),['disable'=>'disable']) ?>
 
-    <?= $form->field($model, 'id_plato')->textInput() ?>
-
-    <?= $form->field($model, 'id_producto')->textInput() ?>
+    <?= $form->field($model, 'id_producto')->dropDownList($model->getdropdownProducto()) ?>
 
     <?= $form->field($model, 'gramos_producto')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'shadow lift btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
