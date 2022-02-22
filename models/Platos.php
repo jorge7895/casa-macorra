@@ -93,12 +93,14 @@ class Platos extends \yii\db\ActiveRecord
      */
     public function getProductosEnPlatos()
     {
-        return $this->hasMany(ProductosEnPlatos::className(), ['id_plato' => 'id']);
+        return $this->hasMany(ProductosEnPlatos::className(), ['id_plato' => 'id'])
+                ->orderBy('id_producto ASC');
     }
     
     public function getProductos()
     {
-        return $this->hasMany(Productos::className(), ['id' => 'id'])->viaTable('productos_en_platos', ['id_plato'=>'id']);
+        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])->viaTable('productos_en_platos', ['id_plato'=>'id'])
+                ->orderBy('id ASC');
     }
     
 

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Categorias;
 use app\models\Platos;
 use app\models\Productos;
+use \app\models\ProductosEnPlatos;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
 use yii\web\Controller;
@@ -158,6 +159,23 @@ class PlatosController extends Controller
         
         return $this->render('vistaPlatos',[
            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    public function actionMostrarrecetas(){
+        $platos = new ActiveDataProvider([
+            'query' => Platos::find(),
+        ]);
+        
+        $ingredientes = new ActiveDataProvider([
+           'query'=> ProductosEnPlatos::find()->joinWith('productos'),
+        ]);
+        
+        return $this->render('vistaPlatos',[
+           'datos' => [
+               'platos'=>$platos,
+               'ingredientes'=>$ingredientes,
+               ],
         ]);
     }
 }
