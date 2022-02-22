@@ -53,4 +53,8 @@ class Categorias extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Platos::className(), ['categoria' => 'id']);
     }
+    
+    public function getNombre(){
+        return $nombre;
+    }
 }

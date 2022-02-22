@@ -38,8 +38,6 @@ $model = new \app\models\Comandas;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'fecha',
             'precio_total',

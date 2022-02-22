@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_plato')->dropDownList($model->getdropdownPlato()) ?>
+    <?= $form->field($model, 'plato')->dropDownList($model->getdropdownPlato()) ?>
 
     <?= $form->field($model, 'cantidad')->textInput() ?>
 

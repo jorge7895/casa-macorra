@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'nombre',
-            'categoria',
+            'categoría',
             'precio_publico',
             'coste',
         ],

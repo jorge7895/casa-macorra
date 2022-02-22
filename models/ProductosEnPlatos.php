@@ -70,4 +70,5 @@ class ProductosEnPlatos extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Productos::className(), ['id' => 'id_producto']);
     }
+
 }

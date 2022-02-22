@@ -14,9 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'fecha')->textInput() ?>
 
-    <?= $form->field($model, 'id_producto')->textInput() ?>
+    <?= $form->field($model, 'id_producto')->textInput()->dropDownList($model->getdropdownProducto()) ?>
 
-    <?= $form->field($model, 'id_proveedor')->textInput() ?>
+    <?= $form->field($model, 'id_proveedor')->textInput()->dropDownList($model->getdropdownProveedor()) ?>
 
     <?= $form->field($model, 'descuento')->textInput() ?>
 

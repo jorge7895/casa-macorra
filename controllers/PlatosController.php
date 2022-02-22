@@ -2,8 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Categorias;
 use app\models\Platos;
+use app\models\Productos;
 use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -38,8 +41,10 @@ class PlatosController extends Controller
      */
     public function actionIndex()
     {
+        //select p.id, p.nombre, c.nombre, p.precio_publico, p.coste from categorias c inner join platos p on c.id = p.categoria
         $dataProvider = new ActiveDataProvider([
-            'query' => Platos::find(),
+            'query' => Platos::find()->innerJoin('categorias')
+                ->select(['platos.id','platos.nombre','categorias.nombre categoria','platos.precio_publico','platos.coste']),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -65,8 +70,11 @@ class PlatosController extends Controller
      */
     public function actionView($id)
     {
+        $nombreCategoria = Yii::$app->db->createComand("select distinct c.nombre from categorias c where c.id = (select distinct p.id from platos p)")->queryAll();
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'nombreCategoria'=>$nombreCategoria,
         ]);
     }
 
@@ -139,6 +147,17 @@ class PlatosController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página solicitada no existe');
+    }
+    
+    public function actionReceta() {
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => Platos::find(),
+        ]);
+        
+        return $this->render('vistaPlatos',[
+           'dataProvider' => $dataProvider,
+        ]);
     }
 }

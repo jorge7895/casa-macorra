@@ -31,8 +31,6 @@ class Comandas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['fecha'], 'safe'],
-            [['precio_total'], 'number'],
             [['id_plato', 'cantidad'], 'integer'],
             [['id_plato'], 'exist', 'skipOnError' => true, 'targetClass' => Platos::className(), 'targetAttribute' => ['id_plato' => 'id']],
         ];

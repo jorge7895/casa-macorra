@@ -47,7 +47,7 @@ class Productos extends \yii\db\ActiveRecord
             'id' => 'ID',
             'stock' => 'Stock',
             'nombre' => 'Nombre',
-            'precio_compra' => 'Precio Compra',
+            'precio_compra' => 'Precio de compra',
         ];
     }
 

@@ -3,7 +3,8 @@
 namespace app\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
+use app\models\Productos;
 /**
  * This is the model class for table "platos".
  *
@@ -35,7 +36,6 @@ class Platos extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['categoria'], 'integer'],
             [['precio_publico', 'coste'], 'number'],
             [['nombre'], 'string', 'max' => 200],
             [['categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria' => 'id']],
@@ -50,9 +50,9 @@ class Platos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'categoria' => 'Categoria',
-            'precio_publico' => 'Precio Publico',
-            'coste' => 'Coste',
+            'categoria' => 'Categoría',
+            'precio_publico' => 'Precio de venta',
+            'coste' => 'Coste de fabricación',
         ];
     }
 
@@ -96,9 +96,16 @@ class Platos extends \yii\db\ActiveRecord
         return $this->hasMany(ProductosEnPlatos::className(), ['id_plato' => 'id']);
     }
     
+    public function getProductos()
+    {
+        return $this->hasMany(Productos::className(), ['id' => 'id'])->viaTable('productos_en_platos', ['id_plato'=>'id']);
+    }
+    
+
     public function getdropdownCategoria(){
         $models = Categorias::find()->asArray()->all();
         
-        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+        return ArrayHelper::map($models, 'id', 'nombre');
     }
+
 }

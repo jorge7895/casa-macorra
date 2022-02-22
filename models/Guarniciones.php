@@ -31,7 +31,6 @@ class Guarniciones extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['coste'], 'number'],
             [['nombre'], 'string', 'max' => 200],
         ];
     }

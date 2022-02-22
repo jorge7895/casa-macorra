@@ -47,8 +47,8 @@ class Pedidos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'fecha' => 'Fecha',
-            'id_producto' => 'Id Producto',
-            'id_proveedor' => 'Id Proveedor',
+            'id_producto' => 'Producto',
+            'id_proveedor' => 'Proveedor',
             'descuento' => 'Descuento',
         ];
     }
@@ -71,5 +71,17 @@ class Pedidos extends \yii\db\ActiveRecord
     public function getProveedor()
     {
         return $this->hasOne(Proveedores::className(), ['id' => 'id_proveedor']);
+    }
+    
+    public function getdropdownProveedor(){
+        $models = Proveedores::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+    }
+    
+    public function getdropdownProducto(){
+        $models = Productos::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
     }
 }

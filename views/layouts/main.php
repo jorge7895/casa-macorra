@@ -38,9 +38,10 @@ AppAsset::register($this);
             <li class="active nav-items ">
                 <?= Html::a(Icon::show('box-open', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Productos  ".Icon::show('sort-down', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2','data-toggle'=>'dropdown']) ?>
               <div class="dropdown-menu">
-                  <?= Html::a("Platos", ['platos/index'], ['class' => 'dropdown-item']) ?>
+                  <?= Html::a("Platos", ['platos/receta'], ['class' => 'dropdown-item']) ?>
                   <?= Html::a("Productos", ['productos/index'], ['class' => 'dropdown-item']) ?>
                   <?= Html::a("Guarniciones", ['guarniciones/index'], ['class' => 'dropdown-item']) ?>
+                  <?= Html::a("Categorias", ['categorias/index'], ['class' => 'dropdown-item']) ?>
               </div>
             </li>
             <li class="active nav-items ">
@@ -52,7 +53,6 @@ AppAsset::register($this);
             <li class="active nav-items ">
                 <?= Html::a(Icon::show('address-book', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Proveedores", ['proveedores/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
             </li>
-
             </ul>
             
         </nav>
