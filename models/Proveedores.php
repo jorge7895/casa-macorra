@@ -17,6 +17,7 @@ use Yii;
  */
 class Proveedores extends \yii\db\ActiveRecord
 {
+    public $telefonos;
     /**
      * {@inheritdoc}
      */
@@ -78,4 +79,6 @@ class Proveedores extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TelefonosProveedores::className(), ['id_proveedor' => 'id']);
     }
+    
+   
 }

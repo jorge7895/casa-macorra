@@ -55,7 +55,7 @@ class Platos extends \yii\db\ActiveRecord
             'coste' => 'Coste de fabricación',
         ];
     }
-
+    
     /**
      * Gets query for [[Categoria0]].
      *
@@ -99,7 +99,8 @@ class Platos extends \yii\db\ActiveRecord
     
     public function getProductos()
     {
-        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])->viaTable('productos_en_platos', ['id_plato'=>'id'])
+        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])
+                ->viaTable('productos_en_platos', ['id_plato'=>'id'])
                 ->orderBy('id ASC');
     }
     

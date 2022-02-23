@@ -39,8 +39,8 @@ AppAsset::register($this);
               <div class="dropdown-menu">
                   <?= Html::a("Platos", ['platos/receta'], ['class' => 'dropdown-item']) ?>
                   <?= Html::a("Productos", ['productos/index'], ['class' => 'dropdown-item']) ?>
-                  <?= Html::a("Guarniciones", ['guarniciones/index'], ['class' => 'dropdown-item']) ?>
-                  <?= Html::a("Categorias", ['categorias/index'], ['class' => 'dropdown-item']) ?>
+                  <?= Html::a("Guarniciones", ['guarniciones/guarnicion'], ['class' => 'dropdown-item']) ?>
+                  <?= Html::a("Categorías", ['categorias/index'], ['class' => 'dropdown-item']) ?>
               </div>
             </li>
             <li class="active nav-items ">

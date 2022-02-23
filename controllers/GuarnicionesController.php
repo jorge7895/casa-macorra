@@ -81,7 +81,7 @@ class GuarnicionesController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['guarnicion']);
             }
         } else {
             $model->loadDefaultValues();
@@ -104,7 +104,7 @@ class GuarnicionesController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['guarnicion']);
         }
 
         return $this->render('update', [
@@ -123,7 +123,7 @@ class GuarnicionesController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['guarnicion']);
     }
 
     /**
@@ -140,5 +140,17 @@ class GuarnicionesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    
+    public function actionGuarnicion() {
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => Guarniciones::find(),
+        ]);
+        
+        return $this->render('vistaGuarniciones',[
+           'dataProvider' => $dataProvider,
+        ]);
     }
 }

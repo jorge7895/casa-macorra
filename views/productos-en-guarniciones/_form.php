@@ -12,14 +12,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_guarnicion')->textInput() ?>
+    <?= $form->field($model, 'id_guarnicion')->dropDownList($model->getdropdownGuarniciones(),['hidden'=>'hidden']) ?>
 
-    <?= $form->field($model, 'id_producto')->textInput() ?>
+    <?= $form->field($model, 'id_producto')->dropDownList($model->getdropdownProductos()) ?>
 
     <?= $form->field($model, 'gramos_producto')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'shadow lift btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

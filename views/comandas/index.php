@@ -38,10 +38,17 @@ Icon::map($this, Icon::FA);
         'dataProvider' => $dataProvider,
         'columns' => [
             'id',
-            'fecha',
+        
             'precio_total',
             'id_plato',
             'cantidad',
+            // atributo para dar formato a la fecha
+            [
+            'attribute'=>'fecha',
+            'label'=>'Fecha',
+            'format'=>['date', 'php:d-m-Y'],
+            'headerOptions' => ['width' => '200'],
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {

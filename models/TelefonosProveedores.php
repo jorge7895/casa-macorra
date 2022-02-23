@@ -55,4 +55,6 @@ class TelefonosProveedores extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Proveedores::className(), ['id' => 'id_proveedor']);
     }
+    
+
 }

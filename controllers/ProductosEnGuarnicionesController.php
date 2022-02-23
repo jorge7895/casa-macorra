@@ -87,7 +87,7 @@ class ProductosEnGuarnicionesController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -140,5 +140,23 @@ class ProductosEnGuarnicionesController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionCreateid($guarnicion)
+    {
+        $model = new ProductosEnGuarniciones();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        } else {
+            $model->loadDefaultValues();
+            $model->id_guarnicion = $guarnicion;
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 }

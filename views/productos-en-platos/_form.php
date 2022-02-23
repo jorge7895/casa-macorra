@@ -11,8 +11,8 @@ use yii\widgets\ActiveForm;
 <div class="productos-en-platos-form">
 
     <?php $form = ActiveForm::begin(); ?>
-                                                            <!--TODO-->
-    <?= $form->field($model, 'id_plato')->dropDownList($model->getdropdownPlato(),['disable'=>'disable']) ?>
+                                                           
+    <?= $form->field($model, 'id_plato')->dropDownList($model->getdropdownPlato(),['hidden'=>'hidden']) ?>
 
     <?= $form->field($model, 'id_producto')->dropDownList($model->getdropdownProducto()) ?>
 

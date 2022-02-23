@@ -64,6 +64,14 @@ class Guarniciones extends \yii\db\ActiveRecord
      */
     public function getProductosEnGuarniciones()
     {
-        return $this->hasMany(ProductosEnGuarniciones::className(), ['id_guarnicion' => 'id']);
+        return $this->hasMany(ProductosEnGuarniciones::className(), ['id_guarnicion' => 'id'])
+                ->orderBy('id ASC');
+    }
+    
+    public function getProductos()
+    {
+        return $this->hasMany(Productos::className(), ['id' => 'id_producto'])
+                ->viaTable('productos_en_guarniciones', ['id_guarnicion'=>'id'])
+                ->orderBy('id ASC');
     }
 }
