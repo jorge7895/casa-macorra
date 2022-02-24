@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ProductosEnPlatos;
+use app\models\Platos;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -81,7 +82,7 @@ class ProductosEnPlatosController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return PlatosController::receta();
             }
         } else {
             $model->loadDefaultValues();
@@ -148,7 +149,7 @@ class ProductosEnPlatosController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->actionReceta();
             }
         } else {
             $model->loadDefaultValues();
@@ -157,6 +158,17 @@ class ProductosEnPlatosController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+        ]);
+    }
+    
+    public function actionReceta() {
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => Platos::find(),
+        ]);
+        
+        return $this->render('../platos/vistaPlatos',[
+           'dataProvider' => $dataProvider,
         ]);
     }
 }

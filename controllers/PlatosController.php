@@ -42,7 +42,7 @@ class PlatosController extends Controller
      */
     public function actionIndex()
     {
-        //select p.id, p.nombre, c.nombre, p.precio_publico, p.coste from categorias c inner join platos p on c.id = p.categoria
+        
         $dataProvider = new ActiveDataProvider([
             'query' => Platos::find(),
             /*

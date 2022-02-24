@@ -72,7 +72,7 @@ class ProductosEnGuarniciones extends \yii\db\ActiveRecord
     }
     
     public function getdropdownProductos(){
-        $models = Productos::find()->asArray()->all();
+        $models = Productos::find()->where('id  not in (select id_producto from productos_en_guarniciones where id_guarnicion = '.$this->id_guarnicion.')' )->asArray()->all();
         
         return ArrayHelper::map($models, 'id', 'nombre');
     }

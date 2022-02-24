@@ -45,8 +45,8 @@ class ProductosEnPlatos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_plato' => 'Id Plato',
-            'id_producto' => 'Id Producto',
+            'id_plato' => ' ',
+            'id_producto' => 'Producto',
             'gramos_producto' => 'Gramos Producto',
         ];
     }
@@ -72,7 +72,8 @@ class ProductosEnPlatos extends \yii\db\ActiveRecord
     }
     
     public function getdropdownProducto(){
-        $models = Productos::find()->asArray()->all();
+        // es un dropdown que nos devuelve los platos disponibles siempre que no se encuentren ya incluidos en el propio plato
+        $models = Productos::find()->where('id  not in (select id_producto from productos_en_platos where id_plato = '.$this->id_plato.')' )->asArray()->all();
         
         return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
     }
