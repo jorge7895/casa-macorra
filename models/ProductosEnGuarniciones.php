@@ -45,8 +45,8 @@ class ProductosEnGuarniciones extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_guarnicion' => 'Id Guarnicion',
-            'id_producto' => 'Id Producto',
+            'id_guarnicion' => 'Guarnicion',
+            'id_producto' => 'Producto',
             'gramos_producto' => 'Gramos Producto',
         ];
     }

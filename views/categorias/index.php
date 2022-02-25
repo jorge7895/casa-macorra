@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 $model = new \app\models\Categorias;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->title = 'Casa Macorra';
 ?>
 <div class="categorias-index">
     <div class="header">

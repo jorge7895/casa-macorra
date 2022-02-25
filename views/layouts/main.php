@@ -7,6 +7,7 @@ use app\assets\AppAsset;
 use yii\bootstrap4\Html;
 use kartik\icons\Icon;
 Icon::map($this, Icon::FA);
+
 FontAsset::register($this);
 AppAsset::register($this);
 ?>

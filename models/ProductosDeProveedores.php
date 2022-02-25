@@ -45,8 +45,8 @@ class ProductosDeProveedores extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_producto' => 'Id Producto',
-            'id_proveedor' => 'Id Proveedor',
+            'id_producto' => 'Producto',
+            'id_proveedor' => 'Proveedor',
             'precio_compra' => 'Precio Compra',
         ];
     }

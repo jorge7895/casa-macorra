@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Guarniciones En Platos';
+$this->title = 'Casa Macorra';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="guarniciones-en-platos-index">

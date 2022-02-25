@@ -11,7 +11,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Guarniciones';
+$this->title = 'Casa Macorra';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="guarniciones-index">

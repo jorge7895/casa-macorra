@@ -43,8 +43,8 @@ class GuarnicionesEnPlatos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_plato' => 'Id Plato',
-            'id_guarnicion' => 'Id Guarnicion',
+            'id_plato' => 'Plato',
+            'id_guarnicion' => 'Guarnicion',
         ];
     }
 

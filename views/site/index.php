@@ -8,7 +8,7 @@ use miloschuman\highcharts\Highcharts;
 
 Icon::map($this, Icon::FA);
 
-$this->title = 'My Yii Application';
+$this->title = 'Casa Macorra';
 
 
 ?>

@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->title = 'Casa Macorra';
 ?>
 <div class="comandas-index">
     <div class="header">
