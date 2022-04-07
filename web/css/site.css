@@ -198,6 +198,11 @@ a:hover {
     color: #ffffff;
 }
 
+.button-link{
+    border: none;
+    background-color: #FFFFFF;
+    color: #4470E3;
+}
 
 
 @media screen and (max-width: 480px){

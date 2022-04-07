@@ -32,7 +32,7 @@ class ProductosEnPlatos extends \yii\db\ActiveRecord
     {
         return [
             [['id_plato', 'id_producto'], 'integer'],
-            [['gramos_producto'], 'number'],
+            [['gramos_producto'], 'number','min' => 0, 'max' => 50000],
             [['id_plato'], 'exist', 'skipOnError' => true, 'targetClass' => Platos::className(), 'targetAttribute' => ['id_plato' => 'id']],
             [['id_producto'], 'exist', 'skipOnError' => true, 'targetClass' => Productos::className(), 'targetAttribute' => ['id_producto' => 'id']],
         ];
@@ -84,4 +84,16 @@ class ProductosEnPlatos extends \yii\db\ActiveRecord
         return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
     }
     
+    public function getdropdownProductoTotal(){
+        
+        $models = Productos::find()->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+    }
+    
+    public function getNombreProducto($producto){
+        $models = Productos::find()->where('id = '.$producto)->asArray()->all();
+        
+        return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
+    }
 }

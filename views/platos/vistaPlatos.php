@@ -19,14 +19,14 @@ $model = new \app\models\Platos;
                         <h1 class="header-titulo">Platos</h1>
                     </div>
                     <div class="col-auto">
-                    <?= Html::button("Añadir plato ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['../platos/create']),'class' => 'shadow lift btn btn-primary','id'=>'modalButton']) ?>
+                    <?= Html::button("Añadir plato ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['/platos/create']),'class' => 'buttonmodal shadow lift btn btn-primary','id'=>'modalButton','data-id'=>$model->id]) ?>
                     <?php
                         yii\bootstrap4\Modal::begin([
-                           'id'     =>'modal',
+                           'id'     =>'modal0',
                            'size'   =>'modal-md',
                            'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
                            ]);
-                        echo "<div id='modalContent'> </div>";
+                        echo "<div id='modalContent0'> </div>";
                         yii\bootstrap4\Modal::end();
                     ?>
                     </div>

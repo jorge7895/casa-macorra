@@ -66,7 +66,7 @@ class ProductosEnPlatosController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -88,7 +88,7 @@ class ProductosEnPlatosController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -109,6 +109,19 @@ class ProductosEnPlatosController extends Controller
         }
 
         return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+    
+        public function actionUpdate2($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update_1', [
             'model' => $model,
         ]);
     }
@@ -146,29 +159,32 @@ class ProductosEnPlatosController extends Controller
     public function actionCreateid($plato)
     {
         $model = new ProductosEnPlatos();
-
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => Platos::find(),
+//        ]);
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->actionReceta();
+                return $this->redirect('../platos/receta');
             }
         } else {
             $model->loadDefaultValues();
             $model->id_plato = $plato;
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
     
-    public function actionReceta() {
-        
-        $dataProvider = new ActiveDataProvider([
-            'query' => Platos::find(),
-        ]);
-        
-        return $this->render('../platos/vistaPlatos',[
-           'dataProvider' => $dataProvider,
-        ]);
-    }
+//    public function actionIngredientes($id) {
+//
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => Platos::find()->where($id = 'id'),
+//        ]);
+//
+//        return $this->render('../productos-en-platos',[
+//           'dataProvider' => $dataProvider,
+//        ]);
+//    }
 }

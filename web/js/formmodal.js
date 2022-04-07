@@ -1,23 +1,20 @@
 $(function(){
- //alert("jquery");
+ //funcion de jquery
     
-    
-    $('#modalButton').click(function (){
-       $('#modal').modal('show')
-                  .find('#modalContent')
-                  .load($(this).attr('value'));
-        document.getElementById('modalHeader').innerHTML = '<h4>' + $(this).attr('title') + '</h4>';
+
+    $('.buttonmodal').mouseenter(function(){
+        if($(this).attr('data-id') != null){
+            id = $(this).attr('data-id'); 
+        }else{
+            id = 0;
+        }
+        console.log(id);
+        
+        $(this).click(function (){
+            console.log(id);
+            $('#modal'+id).modal('show')
+                       .find('#modalContent'+id)
+                       .load($(this).attr('value'));
+         });
     });
-
-
-    $('.custom_button').click(function(){
-        $('#modal').modal('show')
-                   .find('#modalContent')
-                   .load($(this).attr('value'));
-         //dynamiclly set the header for the modal
-          document.getElementById('modalHeader').innerHTML = '<h4>' + $(this).attr('title') + '</h4>';
-
-    });
-
-
 });

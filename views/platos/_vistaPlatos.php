@@ -31,8 +31,23 @@ Icon::map($this, Icon::FA);
         <div class="row">
             <div class="col-6 text-left">
                 <h5 class="text-muted">Ingredientes:</h5>
-                <p class="m-0">
-                    <?= implode('</p><p class="m-0">',ArrayHelper::getColumn($model->productos,'nombre'))?>
+                <p class="mx-3 mb-0">
+                    <?php 
+                    $idProd = ArrayHelper::getColumn($model->productosEnPlatos, 'id');
+                    $nomProd = ArrayHelper::getColumn($model->productos,'nombre');
+                        for ($i = 0; $i <= count($idProd)-1; $i++) {
+                            echo '</p><p class="mx-3 mb-0">'.$nomProd[$i].' '.Html::button("Editar",['value'=>Url::to(['productos-en-platos/view','id'=>$idProd[$i]]),'class' => 'buttonmodal button-link','id'=>'#modalButton'.$idProd[$i], 'data-id'=>$idProd[$i]]);
+                            
+                            
+                            yii\bootstrap4\Modal::begin([
+                               'id'     =>'modal$idProd[$i]',
+                               'size'   =>'modal-md',
+                               'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
+                               ]);
+                            echo "<div id='modalContent$idProd[$i]'> </div>";
+                            yii\bootstrap4\Modal::end();
+                        }
+                    ?>
                 </p>
             </div>
             <div class="col-3">
@@ -47,6 +62,7 @@ Icon::map($this, Icon::FA);
                     <?php 
                         $precio = ArrayHelper::getColumn($model->productos,'precio_compra');
                         $gproducto = ArrayHelper::getColumn($model->productosEnPlatos,'gramos_producto');
+                        $calculo = 0;
                         $total = 0;
                         $coste[]=0;
                         if(count($gproducto)>0){
@@ -63,8 +79,17 @@ Icon::map($this, Icon::FA);
             </div>
             
         </div>
-        <div class="co-12">
-            <?= Html::a('Añadir ingredientes...', ['productos-en-platos/createid','plato'=>$model->id], ['class' => '']) ?>
+        <div class="col-12">
+            <?= Html::button("Añadir ingrediente",['value'=>Url::to(['../productos-en-platos/createid','plato'=>$model->id]),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'#modalButton'.$model->id, 'data-id'=>$model->id]) ?>
+            <?php
+                yii\bootstrap4\Modal::begin([
+                   'id'     =>"modal$model->id",
+                   'size'   =>'modal-md',
+                   'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
+                   ]);
+                echo "<div id='modalContent$model->id'> </div>";
+                yii\bootstrap4\Modal::end();
+            ?>
         </div>
         <hr>
         <div class="row">
