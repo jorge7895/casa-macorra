@@ -6,7 +6,8 @@ use yii\helpers\ArrayHelper;
  use kartik\icons\Icon;
 
 Icon::map($this, Icon::FA);
-
+$this->title = 'Casa Macorra - Guarniciones';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 

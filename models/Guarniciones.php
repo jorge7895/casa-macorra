@@ -32,6 +32,7 @@ class Guarniciones extends \yii\db\ActiveRecord
         return [
             [['nombre'], 'required'],
             [['nombre'], 'string', 'max' => 200],
+            [['nombre'],'match','pattern'=>'/^[a-z,.\s-]+$/i'],
         ];
     }
 

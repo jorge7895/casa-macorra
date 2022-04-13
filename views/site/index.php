@@ -8,7 +8,7 @@ use miloschuman\highcharts\Highcharts;
 
 Icon::map($this, Icon::FA);
 
-$this->title = 'Casa Macorra';
+$this->title = 'Casa Macorra - Home';
 
 
 ?>
@@ -23,14 +23,15 @@ $this->title = 'Casa Macorra';
                 </div>
                 <div class="col-auto">
                     <!--Boton que al pulsarlo nos abre un modal para añadir comandas-->
-                    <?= Html::button("Añadir comanda ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['../comandas/create']),'class' => 'shadow lift btn btn-primary','id'=>'modalButton']) ?>
+                    <?= Html::button("Añadir comanda ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['comandas/create']),'class' => 'buttonmodal shadow lift btn btn-primary','id'=>'modalButton0']) ?>
+                    
                     <?php
                         yii\bootstrap4\Modal::begin([
-                           'id'     =>'modal',
+                           'id'     =>'modal0',
                            'size'   =>'modal-md',
                            'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
                            ]);
-                        echo "<div id='modalContent'> </div>";
+                        echo "<div id='modalContent0'> </div>";
                         yii\bootstrap4\Modal::end();
                     ?>
                 </div>

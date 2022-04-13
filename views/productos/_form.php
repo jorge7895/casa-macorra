@@ -12,10 +12,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'stock')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-
+    
+    <?= $form->field($model, 'stock')->textInput(['maxlength' => true]) ?>
+    
     <?= $form->field($model, 'precio_compra')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

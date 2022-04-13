@@ -31,8 +31,10 @@ class Comandas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_plato', 'cantidad'], 'integer'],
+            [['id_plato'], 'integer'],
             [['id_plato'], 'exist', 'skipOnError' => true, 'targetClass' => Platos::className(), 'targetAttribute' => ['id_plato' => 'id']],
+            [['cantidad'],'required'],
+            [['cantidad'], 'integer','min' => 1, 'max' => 50000]
         ];
     }
 
@@ -45,7 +47,7 @@ class Comandas extends \yii\db\ActiveRecord
             'id' => 'ID',
             'fecha' => 'Fecha',
             'precio_total' => 'Precio Total',
-            'id_plato' => 'Id Plato',
+            'id_plato' => 'Plato',
             'cantidad' => 'Cantidad',
         ];
     }

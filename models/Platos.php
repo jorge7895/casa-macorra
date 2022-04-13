@@ -36,8 +36,9 @@ class Platos extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['precio_publico', 'coste'], 'number'],
             [['nombre'], 'string', 'max' => 200],
+            [['nombre'], 'match','pattern'=>'/^[a-z,.\s-]+$/i'],
+            [['precio_publico', 'coste'], 'number','min' => 0, 'max' => 50000],            
             [['categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria' => 'id']],
         ];
     }

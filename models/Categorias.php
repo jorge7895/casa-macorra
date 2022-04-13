@@ -28,8 +28,9 @@ class Categorias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre'], 'required'],
+            [['nombre'], 'required','message'=>'Ingresa una categoría'],
             [['nombre'], 'string', 'max' => 200],
+            [['nombre'],'match','pattern'=>'/^[a-z,.\s-]+$/i'],
         ];
     }
 

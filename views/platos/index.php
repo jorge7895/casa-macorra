@@ -12,7 +12,8 @@ $model = new \app\models\Platos;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+$this->title = 'Casa Macorra - Platos';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="platos-index">
     <div class="header">
@@ -40,7 +41,6 @@ $model = new \app\models\Platos;
                 'dataProvider' => $dataProvider,
                 'tableOptions' => ['class' => 'table table-bordered table-striped'],
                 'columns' => [
-                    'id',
                     'nombre',
                     'categoria',
                     'precio_publico',

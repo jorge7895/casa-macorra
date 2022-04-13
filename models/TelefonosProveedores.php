@@ -30,6 +30,7 @@ class TelefonosProveedores extends \yii\db\ActiveRecord
     {
         return [
             [['id_proveedor', 'telefono'], 'integer'],
+            [['telefono'],'match', 'pattern'=>'/^[0-9]{9}/'],
             [['id_proveedor'], 'exist', 'skipOnError' => true, 'targetClass' => Proveedores::className(), 'targetAttribute' => ['id_proveedor' => 'id']],
         ];
     }

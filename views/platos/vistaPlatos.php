@@ -6,7 +6,8 @@ use yii\helpers\Url;
 use kartik\icons\Icon;
 
 Icon::map($this, Icon::FA);
-$this->title = 'Casa Macorra';
+$this->title = 'Casa Macorra - Platos';
+$this->params['breadcrumbs'][] = $this->title;
 $model = new \app\models\Platos;
 ?>
 

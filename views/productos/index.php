@@ -10,7 +10,7 @@ Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Casa Macorra';
+$this->title = 'Casa Macorra - Productos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="productos-index">
@@ -23,14 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h1 class="header-titulo">Productos</h1>
                     </div>
                     <div class="col-auto">
-                    <?= Html::button("Añadir productos ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['../productos/create']),'class' => 'shadow lift btn btn-primary','id'=>'modalButton']) ?>
+                    <?= Html::button("Añadir productos ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['productos/create']),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'modalButton0']) ?>
+                        
                     <?php
                         yii\bootstrap4\Modal::begin([
-                           'id'     =>'modal',
+                           'id'     =>'modal0',
                            'size'   =>'modal-md',
                            'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
                            ]);
-                        echo "<div id='modalContent'> </div>";
+                        echo "<div id='modalContent0'> </div>";
                         yii\bootstrap4\Modal::end();
                     ?>
                     </div>
@@ -39,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'id',
             'nombre',
             'stock',
             'precio_compra',

@@ -33,8 +33,10 @@ class Proveedores extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
+            [['nombre'], 'string', 'max' => 200],
+            [['nombre'], 'match','pattern'=>'/^[a-z,.\s-]+$/i'],
             [['nif'], 'string', 'max' => 9],
-            [['nombre'], 'string', 'max' => 150],
+            [['nif'],'match', 'pattern'=>'/^[0-9]{8}[A-Z]{1}/i']
         ];
     }
 
