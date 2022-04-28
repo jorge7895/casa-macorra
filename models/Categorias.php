@@ -56,6 +56,10 @@ class Categorias extends \yii\db\ActiveRecord
     }
     
     public function getNombre(){
-        return $nombre;
+        return "nombre";
+    }
+    
+    public function getCategoria(){
+        return $this->nombre;
     }
 }

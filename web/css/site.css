@@ -204,6 +204,16 @@ a:hover {
     color: #4470E3;
 }
 
+.table-color{
+    background-color: #004139;
+    color: white;
+    padding: 10px;
+}
+
+.panel-title{
+    margin: 2px;
+}
+
 
 @media screen and (max-width: 480px){
     .buton-sidebar {

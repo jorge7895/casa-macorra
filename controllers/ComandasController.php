@@ -7,6 +7,9 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
+
+use app\models\Platos;
 
 /**
  * ComandasController implements the CRUD actions for Comandas model.
@@ -38,12 +41,17 @@ class ComandasController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new Comandas;
+        $query = (new \yii\db\Query())->select('comandas.fecha, platos.nombre, comandas.cantidad')
+                ->from('comandas')
+                ->join('LEFT JOIN', 'platos', 'comandas.id_plato = platos.id');
         $dataProvider = new ActiveDataProvider([
-            'query' => Comandas::find(),
-            /*
+            'query' => $query,
+           
             'pagination' => [
-                'pageSize' => 50
+                'pageSize' => 20
             ],
+            /*
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
@@ -54,6 +62,7 @@ class ComandasController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'gridColumns' => ['fecha','nombre','cantidad']
         ]);
     }
 
@@ -140,5 +149,35 @@ class ComandasController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    //posible cambio a gridview normal
+    public function actionMes()
+    {
+        $searchModel = new Comandas;
+        $expresion = new Expression("year(fecha) as año, elt(MONTH(fecha),'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre') as Mes, concat(sum(cantidad),' platos') as 'Cantidad de platos'");
+        $query = (new \yii\db\Query())->select($expresion)
+                ->from('comandas')
+                ->groupBy('month(fecha), year(fecha)')
+                ->orderBy('año desc, fecha asc');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            
+            'pagination' => [
+                'pageSize' => 10
+            ],
+             /*
+            'sort' => [
+                'defaultOrder' => [
+                    'año' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'gridColumns' => ['año','Mes','Cantidad de platos']
+        ]);
     }
 }

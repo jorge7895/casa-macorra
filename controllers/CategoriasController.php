@@ -38,6 +38,7 @@ class CategoriasController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new Categorias;
         $dataProvider = new ActiveDataProvider([
             'query' => Categorias::find(),
             /*
@@ -54,6 +55,8 @@ class CategoriasController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'gridColumns' => ['id','nombre'],
+            'searchModel'=>$searchModel
         ]);
     }
 
