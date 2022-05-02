@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\helpers\Url;
 /**
  * ProductosController implements the CRUD actions for Productos model.
  */
@@ -38,12 +39,74 @@ class ProductosController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Productos::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
+        $searchModel = new \app\models\ProductosSearch();
+        $query = Productos::find();
+        $gridColumns = [
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'nombre',
+                'label'=>'Nombre',
+                'pageSummary'=>'Inversión total',
+                'pageSummaryOptions' => ['colspan' => 2],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
             ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'precio_compra',
+                'label'=>'Precio de compra',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'stock',
+                'label'=>'Stock Disponible',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [
+                'class'=>'kartik\grid\FormulaColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'value' => function ($model, $key, $index, $widget) { 
+                    $p = compact('model', 'key', 'index');
+                    return $widget->col(1, $p) * $widget->col(2, $p);
+                },
+                'header'=>'Inversión',
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+                'format' => ['decimal', 2],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+                'pageSummary'=>true,
+            ],
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                'dropdown' => 'dropdown',
+                'dropdownOptions' => ['class' => 'float-center'],
+                'urlCreator' => function($action, $model, $key, $index) { 
+                    return Url::toRoute([$action, 'id' => $model['id']]); 
+                },
+                'viewOptions' => ['title' => 'Ver en detalle', 'data-toggle' => 'tooltip'],
+                'updateOptions' => ['title' => 'Modificar registro', 'data-toggle' => 'tooltip'],
+                'deleteOptions' => ['title' => 'Eliminar', 'data-toggle' => 'tooltip'],
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+            ],
+        ];
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+           
+            'pagination' => [
+                'pageSize' => 10
+            ],
+            /*
             'sort' => [
                 'defaultOrder' => [
                     'id' => SORT_DESC,
@@ -54,6 +117,8 @@ class ProductosController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel'=>$searchModel,
+            'gridColumns'=>$gridColumns,
         ]);
     }
 

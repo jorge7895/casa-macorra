@@ -1,17 +1,20 @@
 <?php
+
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
+use yii\grid\ActionColumn;
+use yii\widgets\Pjax;
 
 use kartik\icons\Icon;
 use kartik\grid\GridView;
-
-Icon::map($this, Icon::FA);
-
-$model = new \app\models\Categorias;
+use kartik\bs4dropdown\Dropdown;
+use kartik\bs4dropdown\ButtonDropdown;
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\postCategorias */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'Casa Macorra - Categorías';
+
+$this->title = Yii::t('app', 'Categorias');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="categorias-index">
     <div class="header">
@@ -34,77 +37,57 @@ $this->title = 'Casa Macorra - Categorías';
                     </div>
                 </div>
             </div>
-            <?php 
-                     
-                $gridColumns = [
-                [
-                    'class'=>'kartik\grid\SerialColumn',
-                    'contentOptions'=>['class'=>'kartik-sheet-style'],
-                    'width'=>'36px',
-                    'pageSummary'=>'Total',
-                    'pageSummaryOptions' => ['colspan' => 6],
-                    'header'=>'',
-                    'headerOptions'=>['class'=>'kartik-sheet-style']
-                ],
-                [
-                    'class' => 'kartik\grid\EditableColumn',
-                    'attribute' => 'Categoria',
-                    'vAlign' => 'middle',
-                    'width' => '210px',
-                    'editableOptions' =>  function ($model, $key, $index){
-                        return [
-                            'header' => 'Nombre', 
-                            'size' => 'md',
-                        ];
-                    }
-                ],
-                [
-                    'class' => 'kartik\grid\ActionColumn',
-                    'dropdown' => 'dropdown',
-                    'dropdownOptions' => ['class' => 'float-right'],
-                    'urlCreator' => function($action, $model, $key, $index) { 
-                        return Url::toRoute([$action, 'id' => $model->id]); 
-                    },
-                    'viewOptions' => ['title' => 'Ver en detalle', 'data-toggle' => 'tooltip'],
-                    'updateOptions' => ['title' => 'Modificar registro', 'data-toggle' => 'tooltip'],
-                    'deleteOptions' => ['title' => 'Eliminar', 'data-toggle' => 'tooltip'],
-                    'headerOptions' => ['class' => 'kartik-sheet-style'],
-                ],
-                ];
-            echo GridView::widget([
+    <?php Pjax::begin(); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
+
+                
+        echo \kartik\grid\GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => $gridColumns,
-                'containerOptions' => ['style'=>'overflow: auto'], // only set when $responsive = false
+                //'containerOptions' => ['style'=>'overflow: auto'], // only set when $responsive = false
                 'beforeHeader'=>[
                     [
                         'options'=>['class'=>'skip-export'] // remove this row from export
                     ]
                 ],
                 'toolbar' =>  [
-                    ['content'=>
-                        Html::button("Añadir categoria ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['categorias/create']),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'#modalButton0']),
-                        Html::button('<i class="fas fa-plus"></i> Añadir', ['type'=>'button', 'title'=>'Añadir', 'class'=>'btn btn-success', 'onclick'=>'alert("This will launch the book creation form.\n\nDisabled for this demo!");']) . ' '.
-                        Html::a('&lt;i class="glyphicon glyphicon-repeat">&lt;/i>', ['grid-demo'], ['data-pjax'=>0, 'class' => 'btn btn-default', 'title'=>'Reset Grid'])
-                    ],
+                    'content' =>
+                        Html::button("Añadir categoria ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['categorias/create']),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'#modalButton0']) . ' '.
+                        Html::a('<i class="fas fa-redo"></i>', ['index'], ['class' => 'btn btn-outline-secondary','title'=>('Reset Grid'),'data-pjax' => 0, 
+                ]), 
+                    'options' => ['class' => 'btn-group mr-2 me-2'],
                     '{export}',
                     '{toggleData}'
                 ],
-                'pjax' => true,
+                'exportConfig' => [
+                    'csv' => [],
+                    'json' => [],
+                ],
+                'pjax' => false,
                 'bordered' => true,
-                'striped' => false,
+                'striped' => true,
                 'condensed' => false,
                 'responsive' => true,
                 'hover' => true,
                 'floatHeader' => true,
                 'showPageSummary' => false,
+                'itemLabelSingle' => 'Categoría',
+                'itemLabelPlural' => 'Categorías',
+                'toggleDataContainer' => ['class' => 'btn-group mr-2 me-2'],
+                'persistResize' => false,
+                'toggleDataOptions' => ['minCount' => 10],
                 'panel' => [
-                    'heading'=>'<h3 class="panel-title"><i class="far fa-edit"></i> Categorias</h3>',
+                    'heading'=>'<h3 class="panel-title"><i class="fas fa-list"></i> Categorías</h3>',
                     'headingOptions'=>['class'=>'panel-heading table-color rounded-top'],
                 ],
-            ]);
-                            
-            ?>
+        ]);
+    ?>
+    
+
+    <?php Pjax::end(); ?>
+
         </div>
     </div>
 

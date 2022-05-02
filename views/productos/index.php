@@ -3,8 +3,12 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use yii\widgets\Pjax;
+
 use kartik\icons\Icon;
+use kartik\grid\GridView;
+use kartik\bs4dropdown\Dropdown;
+use kartik\bs4dropdown\ButtonDropdown;
 
 Icon::map($this, Icon::FA);
 /* @var $this yii\web\View */
@@ -14,44 +18,80 @@ $this->title = 'Casa Macorra - Productos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="productos-index">
-
     <div class="header">
         <div class="container-fluid">
             <div class="header-body">
                 <div class="row align-items-end row">
-                    <div class="col">
-                        <h1 class="header-titulo">Productos</h1>
-                    </div>
                     <div class="col-auto">
-                    <?= Html::button("Añadir productos ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['productos/create']),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'modalButton0']) ?>
                         
-                    <?php
-                        yii\bootstrap4\Modal::begin([
-                           'id'     =>'modal0',
-                           'size'   =>'modal-md',
-                           'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
-                           ]);
-                        echo "<div id='modalContent0'> </div>";
-                        yii\bootstrap4\Modal::end();
-                    ?>
+                    
+                        <?php
+                            yii\bootstrap4\Modal::begin([
+                            'id'     =>"modal0",
+                            'size'   =>'modal-md',
+                            'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
+                            ]);
+                            echo "<div id='modalContent0'> </div>";
+                            yii\bootstrap4\Modal::end();
+                        ?>
+           
                     </div>
                 </div>
             </div>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            'nombre',
-            'stock',
-            'precio_compra',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
+    <?php Pjax::begin(); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
+
+                
+        echo \kartik\grid\GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => $gridColumns,
+                'filterModel' => $searchModel,
+                //'containerOptions' => ['style'=>'overflow: auto'], // only set when $responsive = false
+                'beforeHeader'=>[
+                    [
+                        'options'=>['class'=>'skip-export'] // remove this row from export
+                    ]
+                ],
+                'toolbar' =>  [
+                    'content' =>
+                        Html::button("Añadir producto ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['categorias/create']),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'#modalButton0']) . ' '.
+                        Html::a('<i class="fas fa-redo"></i>', ['index'], ['class' => 'btn btn-outline-secondary','title'=>('Reset Grid'),'data-pjax' => 0, 
+                        
+                ]), 
+                    'options' => ['class' => 'btn-group mr-2 me-2'],
+                    '{export}',
+                    '{toggleData}'
+                ],
+                'exportConfig' => [
+                    'csv' => [],
+                    'json' => [],
+                ],
+                'pjax' => false,
+                'bordered' => true,
+                'striped' => true,
+                'condensed' => false,
+                'responsive' => true,
+                'hover' => true,
+                'floatHeader' => true,
+                'showPageSummary' => true,
+                'pageSummaryContainer' => ['class' => 'kv-page-summary-container'],
+                'itemLabelSingle' => 'Producto',
+                'itemLabelPlural' => 'Productos',
+                'toggleDataContainer' => ['class' => 'btn-group mr-2 me-2'],
+                'persistResize' => false,
+                'toggleDataOptions' => ['minCount' => 10],
+                'panel' => [
+                    'heading'=>'<h3 class="panel-title"><i class="fas fa-list"></i> Productos</h3>',
+                    'headingOptions'=>['class'=>'panel-heading table-color rounded-top'],
+                ],
+        ]);
+    ?>
+    
+
+    <?php Pjax::end(); ?>
 
         </div>
-    </div>            
+    </div>
+
 </div>

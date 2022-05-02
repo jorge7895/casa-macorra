@@ -3,11 +3,13 @@
 namespace app\controllers;
 
 use app\models\Comandas;
+use yii\grid\ActionColumn;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Expression;
+use yii\helpers\Url;
 
 use app\models\Platos;
 
@@ -16,6 +18,7 @@ use app\models\Platos;
  */
 class ComandasController extends Controller
 {
+    
     /**
      * @inheritDoc
      */
@@ -41,15 +44,61 @@ class ComandasController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new Comandas;
-        $query = (new \yii\db\Query())->select('comandas.fecha, platos.nombre, comandas.cantidad')
+        $searchModel = new \app\models\ComandasSearch();
+        $query = (new \yii\db\Query())->select('comandas.id,comandas.fecha, platos.nombre, comandas.cantidad')
                 ->from('comandas')
                 ->join('LEFT JOIN', 'platos', 'comandas.id_plato = platos.id');
+        $gridColumns = [
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'fecha',
+                'format'=>['date', 'php:d-m-Y'],
+                'label'=>'Fecha',
+                'pageSummary'=>'Total',
+                'pageSummaryOptions' => ['colspan' => 2],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'nombre',
+                'label'=>'Nombre',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [
+                'class'=>'kartik\grid\FormulaColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'cantidad',
+                'label'=>'Cantidad',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+                'pageSummary'=>true,
+            ],
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                'dropdown' => 'dropdown',
+                'dropdownOptions' => ['class' => 'float-center'],
+                'urlCreator' => function($action, $model, $key, $index) { 
+                    return Url::toRoute([$action, 'id' => $model['id']]); 
+                },
+                'viewOptions' => ['title' => 'Ver en detalle', 'data-toggle' => 'tooltip'],
+                'updateOptions' => ['title' => 'Modificar registro', 'data-toggle' => 'tooltip'],
+                'deleteOptions' => ['title' => 'Eliminar', 'data-toggle' => 'tooltip'],
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+            ],
+        ];
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
            
             'pagination' => [
-                'pageSize' => 20
+                'pageSize' => 10
             ],
             /*
             'sort' => [
@@ -62,7 +111,8 @@ class ComandasController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'gridColumns' => ['fecha','nombre','cantidad']
+            'searchModel'=>$searchModel,
+            'gridColumns'=>$gridColumns,
         ]);
     }
 
@@ -154,7 +204,39 @@ class ComandasController extends Controller
     //posible cambio a gridview normal
     public function actionMes()
     {
-        $searchModel = new Comandas;
+        $gridColumns = [
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'año',
+                'label'=>'Año',
+                'pageSummary'=>'Total',
+                'pageSummaryOptions' => ['colspan' => 2],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'Mes',
+                'label'=>'Mes',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'Cantidad de platos',
+                'label'=>'Cantidad de platos',
+                'pageSummary'=>true,
+                'pageSummaryOptions' => ['colspan' => 6],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+        ];
         $expresion = new Expression("year(fecha) as año, elt(MONTH(fecha),'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre') as Mes, concat(sum(cantidad),' platos') as 'Cantidad de platos'");
         $query = (new \yii\db\Query())->select($expresion)
                 ->from('comandas')
@@ -177,7 +259,58 @@ class ComandasController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'gridColumns' => ['año','Mes','Cantidad de platos']
+            'gridColumns'=>$gridColumns
+        ]);
+    }
+    
+    public function actionYear()
+    {
+        $gridColumns = [
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'año',
+                'label'=>'Año',
+                'pageSummary'=>'Total',
+                'pageSummaryOptions' => ['colspan' => 1],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'Cantidad de platos',
+                'label'=>'Cantidad de platos',
+                'pageSummary'=>true,
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+        ];
+        $expresion = new Expression("year(fecha) as año, concat(sum(cantidad),' platos') as 'Cantidad de platos'");
+        $query = (new \yii\db\Query())->select($expresion)
+                ->from('comandas')
+                ->groupBy('year(fecha)')
+                ->orderBy('año desc');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            
+            'pagination' => [
+                'pageSize' => 10
+            ],
+             /*
+            'sort' => [
+                'defaultOrder' => [
+                    'año' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'gridColumns'=>$gridColumns
         ]);
     }
 }

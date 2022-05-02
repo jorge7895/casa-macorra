@@ -17,6 +17,7 @@ use Yii;
  */
 class Comandas extends \yii\db\ActiveRecord
 {
+    
     /**
      * {@inheritdoc}
      */
@@ -67,5 +68,7 @@ class Comandas extends \yii\db\ActiveRecord
         
         return \yii\helpers\ArrayHelper::map($models, 'id', 'nombre');
     }
+    
+    
     
 }

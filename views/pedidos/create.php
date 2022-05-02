@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Pedidos */
 
-$this->title = 'Create Pedidos';
-$this->params['breadcrumbs'][] = ['label' => 'Pedidos', 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Pedidos');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pedidos'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pedidos-create">

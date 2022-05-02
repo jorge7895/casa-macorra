@@ -17,7 +17,6 @@ use Yii;
  */
 class Proveedores extends \yii\db\ActiveRecord
 {
-    public $telefonos;
     /**
      * {@inheritdoc}
      */
@@ -33,10 +32,8 @@ class Proveedores extends \yii\db\ActiveRecord
     {
         return [
             [['nombre'], 'required'],
-            [['nombre'], 'string', 'max' => 200],
-            [['nombre'], 'match','pattern'=>'/^[a-z,.\s-]+$/i'],
             [['nif'], 'string', 'max' => 9],
-            [['nif'],'match', 'pattern'=>'/^[0-9]{8}[A-Z]{1}/i']
+            [['nombre'], 'string', 'max' => 150],
         ];
     }
 
@@ -55,7 +52,7 @@ class Proveedores extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Pedidos]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getPedidos()
     {
@@ -65,7 +62,7 @@ class Proveedores extends \yii\db\ActiveRecord
     /**
      * Gets query for [[ProductosDeProveedores]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getProductosDeProveedores()
     {
@@ -75,12 +72,19 @@ class Proveedores extends \yii\db\ActiveRecord
     /**
      * Gets query for [[TelefonosProveedores]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|yii\db\ActiveQuery
      */
     public function getTelefonosProveedores()
     {
         return $this->hasMany(TelefonosProveedores::className(), ['id_proveedor' => 'id']);
     }
-    
-   
+
+    /**
+     * {@inheritdoc}
+     * @return ProveedoresQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ProveedoresQuery(get_called_class());
+    }
 }

@@ -12,6 +12,7 @@ use Yii;
  * @property int|null $id_producto
  * @property int|null $id_proveedor
  * @property int|null $descuento
+ * @property int|null $cantidad
  *
  * @property Productos $producto
  * @property Proveedores $proveedor
@@ -33,10 +34,9 @@ class Pedidos extends \yii\db\ActiveRecord
     {
         return [
             [['fecha'], 'safe'],
-            [['id_producto', 'id_proveedor'], 'integer'],
+            [['id_producto', 'id_proveedor', 'descuento', 'cantidad'], 'integer'],
             [['id_producto'], 'exist', 'skipOnError' => true, 'targetClass' => Productos::className(), 'targetAttribute' => ['id_producto' => 'id']],
             [['id_proveedor'], 'exist', 'skipOnError' => true, 'targetClass' => Proveedores::className(), 'targetAttribute' => ['id_proveedor' => 'id']],
-            [['descuento'],'integer','min' => 0, 'max' => 100]
         ];
     }
 
@@ -48,9 +48,10 @@ class Pedidos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'fecha' => 'Fecha',
-            'id_producto' => 'Producto',
-            'id_proveedor' => 'Proveedor',
+            'id_producto' => 'Id Producto',
+            'id_proveedor' => 'Id Proveedor',
             'descuento' => 'Descuento',
+            'cantidad' => 'Cantidad',
         ];
     }
 
@@ -72,6 +73,12 @@ class Pedidos extends \yii\db\ActiveRecord
     public function getProveedor()
     {
         return $this->hasOne(Proveedores::className(), ['id' => 'id_proveedor']);
+    }
+    
+    public function getProveedorNombre()
+    {
+               return $this->hasMany(Proveedores::className(), ['id' => 'id_proveedor'])
+                ->viaTable('proveedores', ['id_proveedor'=>'nombre']);
     }
     
     public function getdropdownProveedor(){

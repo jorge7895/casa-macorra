@@ -1,12 +1,15 @@
 <?php
 
 namespace app\controllers;
-
+use Yii;
 use app\models\Categorias;
-use yii\data\ActiveDataProvider;
+use app\models\postCategorias;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+
+use yii\helpers\Url;
 
 /**
  * CategoriasController implements the CRUD actions for Categorias model.
@@ -38,26 +41,41 @@ class CategoriasController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new Categorias;
-        $dataProvider = new ActiveDataProvider([
-            'query' => Categorias::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
+        $searchModel = new postCategorias();
+        $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
+        $gridColumns = [
+        
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'nombre',
+                'label'=>'Nombre',
+                'pageSummary'=>'Total',
+                'pageSummaryOptions' => ['colspan' => 6],
+                'header'=>'',
+                'headerOptions'=>['class'=>'kartik-sheet-style']
+            ],        
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                    'dropdown' => 'dropdown',
+                    'dropdownOptions' => ['class' => 'float-right'],
+                    'urlCreator' => function($action, $model, $key, $index) { 
+                        return Url::toRoute([$action, 'id' => $model->id]); 
+                    },
+                    'viewOptions' => ['title' => 'Ver en detalle', 'data-toggle' => 'tooltip'],
+                    'updateOptions' => ['title' => 'Modificar registro', 'data-toggle' => 'tooltip'],
+                    'deleteOptions' => ['title' => 'Eliminar', 'data-toggle' => 'tooltip'],
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
             ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+];
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'gridColumns' => ['id','nombre'],
-            'searchModel'=>$searchModel
-        ]);
+    // non-ajax - render the grid by default
+    return $this->render('index', [
+        'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+        'gridColumns'=>$gridColumns
+    ]);
     }
 
     /**
@@ -68,7 +86,7 @@ class CategoriasController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -84,7 +102,7 @@ class CategoriasController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['index']);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -107,7 +125,7 @@ class CategoriasController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -142,6 +160,6 @@ class CategoriasController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }

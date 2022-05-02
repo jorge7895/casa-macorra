@@ -4,44 +4,34 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use kartik\icons\Icon;
-
-Icon::map($this, Icon::FA);
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\ProveedoresSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Casa Macorra - Proveedores';
+$this->title = Yii::t('app', 'Proveedores');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="proveedores-index">
-    <div class="header">
-        <div class="container-fluid">
-            <div class="header-body">
-                <div class="row align-items-end row">
-                    <div class="col">
-                        <h1 class="header-titulo">Proveedores</h1>
-                    </div>
-                    <div class="col-auto">
-                    <?= Html::button("Añadir proveedor ".Icon::show('pen', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['value'=>Url::to(['proveedores/create']),'class' => 'buttonmodal shadow lift btn-sm btn-primary','id'=>'modalButton0']) ?>
-                        
-                    <?php
-                        yii\bootstrap4\Modal::begin([
-                           'id'     =>'modal0',
-                           'size'   =>'modal-md',
-                           'clientOptions' => ['backdrop' => 'static', 'keyboard' => FALSE]
-                           ]);
-                        echo "<div id='modalContent0'> </div>";
-                        yii\bootstrap4\Modal::end();
-                    ?>
-                    </div>
-                </div>
-            </div>
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a(Yii::t('app', 'Create Proveedores'), ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?php Pjax::begin(); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
-            
-            'nombre',
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
             'nif',
+            'nombre',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, $model, $key, $index, $column) {
@@ -50,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-        </div>
-    </div>            
+
+    <?php Pjax::end(); ?>
+
 </div>
