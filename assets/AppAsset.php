@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/formmodal.js',
+        'js/site.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

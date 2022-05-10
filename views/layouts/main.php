@@ -23,45 +23,63 @@ AppAsset::register($this);
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
-
+    <?= 
+        Html::button(Icon::show('bars', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['class' => 'burger-open-button shadow lift btn btn-primary','id'=>'open','onClick'=>'openBurger()'])
+    ?>
+    <?= 
+        Html::button(Icon::show('home', ['class' => 'fa-solid', 'framework' => Icon::FAS]),['class' => 'burger-close-button shadow lift btn btn-primary','id'=>'close','onClick'=>'closeBurger()'])
+    ?>
 <div class="d-flex">
-    
-    <input type='checkbox' id='toggle'></input>
-    <aside class='leftbar'>
-        
-        <nav>
-            <?= Html::img('@web/images/logonav.png', ['alt' => 'Logo','class'=>'img-fluid pt-5']) ?>
+
+<aside class='leftbar' id='sidebar'>
+
+        <nav id="menu-on">
+            <?= Html::img('@web/images/logonav.png', ['alt' => 'Logo','class'=>'img-fluid pt-5 nav-big']) ?>
             <ul class="list-unstyled">
-            <li class="active nav-items pt-3">
-                <?= Html::a(Icon::show('home', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Vista General", ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
-            </li>
-            <li class="active nav-items ">
-                <?= Html::a(Icon::show('box-open', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Productos  ".Icon::show('sort-down', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2','data-toggle'=>'dropdown']) ?>
-              <div class="dropdown-menu">
-                  <?= Html::a("Platos", ['platos/receta'], ['class' => 'dropdown-item']) ?>
-                  <?= Html::a("Productos", ['productos/index'], ['class' => 'dropdown-item']) ?>
-                  <?= Html::a("Guarniciones", ['guarniciones/guarnicion'], ['class' => 'dropdown-item']) ?>
-                  <?= Html::a("Categorías", ['categorias/index'], ['class' => 'dropdown-item']) ?>
-              </div>
-            </li>
-            <li class="active nav-items ">
-                <?= Html::a(Icon::show('edit', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Comandas", ['comandas/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
-            </li>
-            <li class="active nav-items ">
-                <?= Html::a(Icon::show('shopping-cart', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Pedidos", ['pedidos/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
-            </li>
-            <li class="active nav-items ">
-                <?= Html::a(Icon::show('address-book', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Proveedores", ['proveedores/index'], ['class' => 'nav-link nav-text text-uppercase pl-2']) ?>
-            </li>
+                <li class="active nav-items pt-3">
+                    <?= 
+                        Html::a(Icon::show('home', ['class' => 'fa-solid', 'framework' => Icon::FAS])."&nbsp;Vista General", ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2 nav-big']),
+                        Html::a(Icon::show('home', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-1 nav-small'])
+                    ?>
+                </li>
+                <li class="active nav-items ">
+                    <?= 
+                        Html::a(Icon::show('box-open', ['class' => 'fa-solid', 'framework' => Icon::FAS])."&nbsp;Productos  ".Icon::show('sort-down', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-2 nav-big','data-toggle'=>'dropdown']),
+                        Html::a(Icon::show('box-open', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['site/index'], ['class' => 'nav-link nav-text text-uppercase pl-1 nav-small','data-toggle'=>'dropdown'])
+                     ?>
+                    <div class="dropdown-menu">
+                        <?= Html::a("Platos", ['platos/receta'], ['class' => 'dropdown-item']) ?>
+                        <?= Html::a("Productos", ['productos/index'], ['class' => 'dropdown-item']) ?>
+                        <?= Html::a("Guarniciones", ['guarniciones/guarnicion'], ['class' => 'dropdown-item']) ?>
+                        <?= Html::a("Categorías", ['categorias/index'], ['class' => 'dropdown-item']) ?>
+                    </div>
+                </li>
+                <li class="active nav-items">
+                    <?= 
+                        Html::a(Icon::show('edit', ['class' => 'fa-solid', 'framework' => Icon::FAS])."Comandas", ['comandas/index'], ['class' => 'nav-link nav-text text-uppercase pl-2 nav-big']),
+                        Html::a(Icon::show('edit', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['comandas/index'], ['class' => 'nav-link nav-text text-uppercase pl-1 nav-small'])
+                    ?>
+                </li>
+                <li class="active nav-items ">
+                    <?= 
+                        Html::a(Icon::show('shopping-cart', ['class' => 'fa-solid', 'framework' => Icon::FAS])."&nbsp;Pedidos", ['pedidos/index'], ['class' => 'nav-link nav-text text-uppercase pl-2 nav-big']),
+                        Html::a(Icon::show('shopping-cart', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['pedidos/index'], ['class' => 'nav-link nav-text text-uppercase pl-1 nav-small'])
+                    ?>
+                </li>
+                <li class="active nav-items ">
+                    <?= 
+                        Html::a(Icon::show('address-book', ['class' => 'fa-solid', 'framework' => Icon::FAS])."&nbsp;Proveedores", ['proveedores/index'], ['class' => 'nav-link nav-text text-uppercase pl-2 nav-big']),
+                        Html::a(Icon::show('address-book', ['class' => 'fa-solid', 'framework' => Icon::FAS]), ['proveedores/index'], ['class' => 'nav-link nav-text text-uppercase pl-1 nav-small'])
+                    ?>
+                </li>
+                <li class="active nav-items" id='active' onclick="contraer()" >
+                    <label class='nav-link nav-text text-uppercase pl-2 nav-big'> <?=Icon::show('chevron-left', ['class' => 'fa-solid is-button', 'framework' => Icon::FAS]).'&nbsp;Contraer'?> </label>
+                    <label class='nav-link nav-text text-uppercase pl-2 nav-small'> <?=Icon::show('chevron-right', ['class' => 'fa-solid is-button', 'framework' => Icon::FAS])?> </label>
+                </li>
             </ul>
-            
         </nav>
-        
-    </aside>
-    <label for='toggle' class='buton-sidebar'> <?=Icon::show('chevron-left', ['class' => 'fa-solid is-button', 'framework' => Icon::FAS])?> </label>
+        </aside>
     <div id="content" >
-
-
         <div class="container-fluid">
             <?= $content ?>
         </div>
