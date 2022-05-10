@@ -12,8 +12,6 @@ $this->title = 'Casa Macorra - Home';
 
 
 ?>
-
-
 <div class="header">
     <div class="container-fluid">
         <div class="header-body">
@@ -127,72 +125,67 @@ $this->title = 'Casa Macorra - Home';
             <div class="card shadow-sm">
                 <div class="card-body">
                     <?php
-                    
-                    $ventas[] = [ 'name' => 'Enero', 'y' => 1000];
-                    $ventas[] = [ 'name' => 'Febrero', 'y' => 700];
-                    $ventas[] = [ 'name' => 'Marzo', 'y' => 1200];
-                    $ventas[] = [ 'name' => 'Abril', 'y' => 960];
-                    $ventas[] = [ 'name' => 'Mayo', 'y' => 880];
-                    $ventas[] = [ 'name' => 'Junio', 'y' => 720];
-                    $ventas[] = [ 'name' => 'Julio', 'y' => 1100];
-                    $ventas[] = [ 'name' => 'Agosto', 'y' => 1300];
-                    $ventas[] = [ 'name' => 'Septiembre', 'y' => 910];
-                    $ventas[] = [ 'name' => 'Octubre', 'y' => 1070];
-                    $ventas[] = [ 'name' => 'Noviembre', 'y' => 910];
-                    $ventas[] = [ 'name' => 'Diciembre', 'y' => 970];
+                    foreach($ingresos as $values){
+                        $mes[] = ($values['mes']);
+                        $euros[] = intval($values['cantidad']);
+                    }
                     echo
-                        Highcharts::widget([
-                                'scripts' => ['modules'],
-                                'options' => [
-                                    'chart' => ['type' => 'column'],
-                                    'title' => ['text' => 'Ingresos mensuales'],
-                                    'xAxis' => ['title' => ['text' => 'Mes']],
-                                    'yAxis' => ['title' => ['text' => 'Unidades']],
-                                    'credits' => ['enabled' => false],
-                                    'series' => [
-                                        [
-                                           'color'=>'#004139',
-                                           'name' => 'Ingresos',
-                                           'data' => $ventas,
-                                        ],
-                                    ],
-                                ]
-                            ]);
+                    Highcharts::widget([
+                        'scripts' => ['modules'],
+                        'options' => [
+                            'chart' => ['type' => 'column'],
+                            'title' => ['text' => 'Ventas'],
+                            'xAxis' => ['categories' => $mes],
+                            'yAxis' => ['title' => ['text' => 'Cantidad']],
+                            'series' => [
+                                [
+                                   'name' => 'Mes',
+                                   'color' => '#004139',
+                                   'colorByPoint' => false,
+                                   'data' => $euros,
+                                ],
+                            ],
+                        ],
+                    ]);
                     ?>
                 </div>
                 <div class="table-responsive"></div>
             </div>
         </div>
     </div>
+    
     <div class="row row-space">
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <?php
-                    $masVendidos[] = [ 'name' => 'Surtido de ibéricos', 'y' => 10];
-                    $masVendidos[] = [ 'name' => 'Patatas bravas', 'y' => 7];
+                    foreach($masVendidos as $values){
+                        $nombre[] = ($values['nombre']);
+                        $cantidad[] = intval($values['cantidad']);
+                    }
+                    
                     echo
-                        Highcharts::widget([
-                                'scripts' => ['modules'],
-                                'options' => [
-                                    'chart' => ['type' => 'column'],
-                                    'title' => ['text' => "Productos más demandados"],
-                                    'xAxis' => ['type' => 'Plato'],
-                                    'yAxis' => ['title' => ['text' => 'Unidades']],
-                                    'credits' => ['enabled' => false],
-                                    'series' => [
-                                        [
-                                           'name' => 'Undidades vendidas',
-                                           'color'=>'#004139',
-                                           'data' => $masVendidos
-                                        ],
-                                    ],
-                                ]
-                            ]);
+                    Highcharts::widget([
+                        'scripts' => ['modules'],
+                        'options' => [
+                            'chart' => ['type' => 'column'],
+                            'title' => ['text' => 'Más vendidos'],
+                            'xAxis' => ['categories' => $nombre],
+                            'yAxis' => ['title' => ['text' => 'Cantidad']],
+                            'series' => [
+                                [
+                                   'name' => 'Nombre',
+                                   'color' => '#004139',
+                                   'data' => $cantidad,
+                                ],
+                            ],
+                        ],
+                    ]);
                     ?>
                 </div>
                 <div class="table-responsive"></div>
             </div>
         </div>
     </div>
+
 </div>

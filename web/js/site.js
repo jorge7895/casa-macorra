@@ -10,7 +10,7 @@ function contraer(){
     console.log(element)
 
     if( element == '60px'){
-        content.style.setProperty('width','89%');
+        content.style.setProperty('width','88%');
         sidebar.style.setProperty('max-width','220px')
         for (let index = 0; index < elemsHiden.length; index++) {
             if(elemsHiden[index] != null){
@@ -21,7 +21,7 @@ function contraer(){
             }
         }
     }else{
-        content.style.setProperty('width','100%');
+        content.style.setProperty('width','99%');
         sidebar.style.setProperty('max-width','60px')
         for (let index = 0; index < elemsHiden.length; index++) {
             if(elemsHiden[index] != null){

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Comandas;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Productos;
+use yii\db\Expression;
 
 class SiteController extends Controller
 {
@@ -61,7 +64,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index.php');
+        $ingresos = $this->ingresos();
+        $bajoStock = $this->bajoStock();
+        $masVendidos = $this->masVendidos();
+        return $this->render('index.php',[
+            'ingresos'=>$ingresos,
+            'bajoStock'=>$bajoStock,
+            'masVendidos'=>$masVendidos
+        ]);
     }
 
     /**
@@ -124,5 +134,27 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function ingresos(){
+        $expresion = new Expression("select sum(cantidad*precio_total) as cantidad, elt(MONTH(fecha),'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre') as mes, year(fecha) as year from comandas group by mes, year order by fecha desc limit 12");
+        $query = Yii::$app->db->createCommand($expresion)->queryAll();
+ 
+
+        return $query;
+    }
+
+    public function bajoStock(){
+        $expresion = new Expression("select nombre , stock from productos order by stock asc limit 5");
+        $query = Yii::$app->db->createCommand($expresion)->queryAll();
+ 
+
+        return $query;
+    }
+
+    public function masVendidos(){
+        $expresion = new Expression("select platos.nombre as nombre, sum(cantidad) as cantidad from comandas left join platos on comandas.id_plato = platos.id group by nombre order by cantidad desc limit 5");
+        $query = Yii::$app->db->createCommand($expresion)->queryAll();
+        return $query;
     }
 }
