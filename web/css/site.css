@@ -221,7 +221,9 @@ a:hover {
     min-height: 100px;
     max-height: 100px;
 }
-
+.arreglo{
+    padding-bottom: 3px;
+}
 
 @media screen and (max-width: 480px){
   .burger-open-button{
@@ -257,6 +259,8 @@ a:hover {
   #active{
       display: none;
   }
+
+
     
 }
 
