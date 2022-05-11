@@ -18,7 +18,7 @@ class ProveedoresSearch extends Proveedores
     {
         return [
             [['id'], 'integer'],
-            [['nif', 'nombre'], 'safe'],
+            [['nombre'], 'safe'],
         ];
     }
 
@@ -57,12 +57,12 @@ class ProveedoresSearch extends Proveedores
         }
 
         // grid filtering conditions
+        /*
         $query->andFilterWhere([
             'id' => $this->id,
         ]);
-
-        $query->andFilterWhere(['like', 'nif', $this->nif])
-            ->andFilterWhere(['like', 'nombre', $this->nombre]);
+*/
+        $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
         return $dataProvider;
     }

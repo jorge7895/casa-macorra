@@ -5,6 +5,11 @@ use kartik\icons\Icon;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use miloschuman\highcharts\Highcharts;
+use yii\grid\ActionColumn;
+use yii\widgets\Pjax;
+use kartik\grid\GridView;
+use kartik\bs4dropdown\Dropdown;
+use kartik\bs4dropdown\ButtonDropdown;
 
 Icon::map($this, Icon::FA);
 
@@ -42,81 +47,110 @@ $this->title = 'Casa Macorra - Home';
     <!--PRIMERA FILA CON LAS 4 TRAJETAS PEQUEÑAS-->
     <div class="row row-space">
         <!--CONTENEDOR 1-->
-        <div class="col-xl col-md-6 col-12">
+        <div class="col-xl col-md-6 col-12 ">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted mb-2 text-left">Ventas totales</h6>
-                    <div class="align-items-center row">
-                        <div class="col">
-                            <h2 class="mb-0">12.600</h2>
-                        </div>
-                        <div class="col-auto">
-                            <?=Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS])?>
-                        </div>
+                <div class="card-body row col-12 cajon">
+                    <div class="col-md-6">
+                        <h4 class="text-uppercase text-muted text-left">Ventas Mensuales</h4>
+                    </div>
+                    <div class="col-md-6 cajon-datos">
+                        <p class="mb-0"><?= intval($ventasMensuales[0]['total']).'&nbsp;'.Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS]) ?></p>
                     </div>
                 </div>
             </div>
         </div>
         <!--CONTENEDOR 2-->
-        <div class="col-xl col-md-6 col-12">
+        <div class="col-xl col-md-6 col-12 ">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted mb-2 text-left">Gastos totales</h6>
-                    <div class="align-items-center row">
-                        <div class="col">
-                            <h2 class="mb-0">9.500</h2>
-                        </div>
-                        <div class="col-auto">
-                            <?=Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS])?>
-                        </div>
+                <div class="card-body row col-12 cajon">
+                    <div class="col-md-6">
+                        <h4 class="text-uppercase text-muted text-left">Gastos Mensuales</h4>
+                    </div>
+                    <div class="col-md-6 cajon-datos">
+                        <p class="mb-0"><?= intval($gastosMensuales[0]['total']).'&nbsp;'.Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS]) ?></p>
                     </div>
                 </div>
             </div>
         </div>
         <!--CONTENEDOR 3-->
-        <div class="col-xl col-md-6 col-12">
+        <div class="col-xl col-md-6 col-12 ">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted mb-2 text-left">Ventas mensuales</h6>
-                    <div class="align-items-center row">
-                        <div class="col">
-                            <h2 class="mb-0">2.800</h2>
-                        </div>
-                        <div class="col-auto">
-                            <?=Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS])?>
-                        </div>
+                <div class="card-body row col-12 cajon">
+                    <div class="col-md-6">
+                        <h4 class="text-uppercase text-muted text-left">Balance</h4>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!--CONTENEDOR 4-->
-        <div class="col-xl col-md-6 col-12">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-uppercase text-muted mb-2 text-left">Gastos mensuales</h6>
-                    <div class="align-items-center row">
-                        <div class="col">
-                            <h2 class="mb-0">1.200</h2>
-                        </div>
-                        <div class="col-auto">
-                            <?=Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS])?>
-                        </div>
+                    <div class="col-md-6 cajon-datos">
+                        <p class="mb-0"><?= intval($ventasMensuales[0]['total']-$gastosMensuales[0]['total']).'&nbsp;'.Icon::show('euro-sign', ['class' => 'fa-solid icon-size text-muted', 'framework' => Icon::FAS]) ?></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 <!--FIN DE LOS CONTENEDORES PEQUEÑOS-->
-<!--INICIO DEL CONTENEDOR PARA ALOJAR LA TABLA CON LAS ULTIMAS COMANDAS-->
+<!--INICIO DEL CONTENEDOR PARA ALOJAR LAS GRAFICAS-->
     <div class="row row-space">
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h4 class="card-header-title">Productos bajos de stock</h4>
-                </div>
-                <div class="table-responsive">
-                    
-                </div>
+                <?php Pjax::begin(); ?>
+                    <?php
+                        $gridColumns = [
+                            [
+                                'class'=>'kartik\grid\DataColumn',
+                                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                                'width'=>'36px',
+                                'attribute' => 'nombre',
+                                'label'=>'Nombre',
+                                'hAlign' => 'center', 
+                                'vAlign' => 'middle',
+                            ],
+                            [                
+                                'class'=>'kartik\grid\DataColumn',
+                                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                                'width'=>'36px',
+                                'attribute' => 'stock',
+                                'label'=>'Stock disponible',
+                                'hAlign' => 'center', 
+                                'vAlign' => 'middle',
+                            ]
+                        ];
+                                
+                        echo \kartik\grid\GridView::widget([
+                                'dataProvider' => $dataBajoStock,
+                                'columns' => $gridColumns,
+                                'beforeHeader'=>[
+                                    [
+                                        'options'=>['class'=>'skip-export'] // remove this row from export
+                                    ]
+                                ],
+                                'toolbar' =>  [
+                                    'options' => ['class' => 'btn-group mr-2 me-2'],
+                                    '{export}'
+                                ],
+                                'exportConfig' => [
+                                    'csv' => [],
+                                    'json' => [],
+                                ],
+                                'pjax' => false,
+                                'bordered' => true,
+                                'striped' => true,
+                                'condensed' => false,
+                                'responsive' => true,
+                                'hover' => true,
+                                'floatHeader' => true,
+                                'showPageSummary' => false,
+                                'pageSummaryContainer' => false,
+                                'itemLabelSingle' => 'Producto',
+                                'itemLabelPlural' => 'Productos',
+                                'toggleDataContainer' => ['class' => 'btn-group mr-2 me-2'],
+                                'persistResize' => false,
+                                'panel' => [
+                                    'heading'=>'<h3 class="panel-title"><i class="fas fa-list"></i> Productos bajos de stock</h3>',
+                                    'headingOptions'=>['class'=>'panel-heading table-color rounded-top'],
+                                    'footer' => false,
+                                ],
+                        ]);
+                    ?>
+                <?php Pjax::end(); ?>
             </div>
         </div>
     </div>
@@ -153,7 +187,6 @@ $this->title = 'Casa Macorra - Home';
             </div>
         </div>
     </div>
-    
     <div class="row row-space">
         <div class="col-12">
             <div class="card shadow-sm">

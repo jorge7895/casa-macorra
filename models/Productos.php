@@ -33,8 +33,8 @@ class Productos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['stock'], 'number','min' => 0, 'max' => 50000],
-            [['precio_compra'], 'number','min' => 0, 'max' => 50000],
+            [['stock'], 'number','min' => 0],
+            [['precio_compra'], 'number','min' => 0],
             [['nombre'], 'required'],
             [['nombre'], 'string', 'max' => 200],
             [['nombre'], 'match','pattern'=>'/^[a-z,.\s-]+$/i'],

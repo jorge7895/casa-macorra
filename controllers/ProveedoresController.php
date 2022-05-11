@@ -1,12 +1,16 @@
 <?php
 
 namespace app\controllers;
-
+use Yii;
 use app\models\Proveedores;
-use app\models\ProveedoresSearch;
+use app\models\TelefonosProveedores;
+use Codeception\Command\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
+use yii\db\Expression;
+use yii\data\ActiveDataProvider;
 
 /**
  * ProveedoresController implements the CRUD actions for Proveedores model.
@@ -38,12 +42,71 @@ class ProveedoresController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ProveedoresSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $expresion = new Expression('proveedores.id as id,nombre, nif, GROUP_CONCAT(telefono SEPARATOR ", ") as telefono');
+        $query = (new \yii\db\Query())->select($expresion)
+                ->from('proveedores')
+                ->join('LEFT JOIN', 'telefonos_proveedores', 'proveedores.id = telefonos_proveedores.id_proveedor')
+                ->groupBy('nif');
+        $gridColumns = [
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'nombre',
+                'label'=>'Nombre',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'telefono',
+                'label'=>'Telefono/s',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'nif',
+                'label'=>'NIF',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [
+                'class' => 'kartik\grid\ActionColumn',
+                'dropdown' => 'dropdown',
+                'dropdownOptions' => ['class' => 'float-center'],
+                'urlCreator' => function($action, $model, $key, $index) { 
+                    return Url::toRoute([$action, 'id' => $model['id']]); 
+                },
+                'viewOptions' => ['title' => 'Ver en detalle', 'data-toggle' => 'tooltip'],
+                'updateOptions' => ['title' => 'Modificar registro', 'data-toggle' => 'tooltip'],
+                'deleteOptions' => ['title' => 'Eliminar', 'data-toggle' => 'tooltip'],
+                'headerOptions' => ['class' => 'kartik-sheet-style'],
+            ],
+        ];
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+           
+            'pagination' => [
+                'pageSize' => 10
+            ],
+            /*
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'gridColumns'=>$gridColumns,
         ]);
     }
 
@@ -77,7 +140,7 @@ class ProveedoresController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -89,6 +152,7 @@ class ProveedoresController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+    
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);

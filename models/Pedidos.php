@@ -34,9 +34,13 @@ class Pedidos extends \yii\db\ActiveRecord
     {
         return [
             [['fecha'], 'safe'],
-            [['id_producto', 'id_proveedor', 'descuento', 'cantidad'], 'integer'],
+            [['id_producto', 'id_proveedor'], 'integer'],
             [['id_producto'], 'exist', 'skipOnError' => true, 'targetClass' => Productos::className(), 'targetAttribute' => ['id_producto' => 'id']],
             [['id_proveedor'], 'exist', 'skipOnError' => true, 'targetClass' => Proveedores::className(), 'targetAttribute' => ['id_proveedor' => 'id']],
+            [['descuento'],'integer','min' => 0, 'max' => 100],
+            [['cantidad'],'integer','min' => 0]
+
+
         ];
     }
 

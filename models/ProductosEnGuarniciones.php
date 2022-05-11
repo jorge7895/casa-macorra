@@ -32,7 +32,7 @@ class ProductosEnGuarniciones extends \yii\db\ActiveRecord
     {
         return [
             [['id_guarnicion', 'id_producto'], 'integer'],
-            [['gramos_producto'], 'number','min' => 0, 'max' => 50000],
+            [['gramos_producto'], 'number','min' => 0],
             [['id_guarnicion'], 'exist', 'skipOnError' => true, 'targetClass' => Guarniciones::className(), 'targetAttribute' => ['id_guarnicion' => 'id']],
             [['id_producto'], 'exist', 'skipOnError' => true, 'targetClass' => Productos::className(), 'targetAttribute' => ['id_producto' => 'id']],
         ];

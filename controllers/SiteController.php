@@ -12,6 +12,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Productos;
 use yii\db\Expression;
+use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
@@ -67,10 +68,14 @@ class SiteController extends Controller
         $ingresos = $this->ingresos();
         $bajoStock = $this->bajoStock();
         $masVendidos = $this->masVendidos();
+        $gastosMensuales = $this->gastosMensuales();
+        $ventasMensuales = $this->ventasMensuales();
         return $this->render('index.php',[
             'ingresos'=>$ingresos,
-            'bajoStock'=>$bajoStock,
-            'masVendidos'=>$masVendidos
+            'dataBajoStock'=>$bajoStock,
+            'masVendidos'=>$masVendidos,
+            'ventasMensuales'=>$ventasMensuales,
+            'gastosMensuales'=>$gastosMensuales
         ]);
     }
 
@@ -145,15 +150,34 @@ class SiteController extends Controller
     }
 
     public function bajoStock(){
-        $expresion = new Expression("select nombre , stock from productos order by stock asc limit 5");
-        $query = Yii::$app->db->createCommand($expresion)->queryAll();
- 
+        $query = (new \yii\db\Query())->select('nombre , stock')
+                ->from('productos')
+                ->orderBy('stock asc')
+                ->limit(5);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => false
+        ]);
 
-        return $query;
+        return $dataProvider;
     }
 
     public function masVendidos(){
         $expresion = new Expression("select platos.nombre as nombre, sum(cantidad) as cantidad from comandas left join platos on comandas.id_plato = platos.id group by nombre order by cantidad desc limit 5");
+        $query = Yii::$app->db->createCommand($expresion)->queryAll();
+        return $query;
+    }
+
+    
+
+    public function ventasMensuales(){
+        $expresion = new Expression("select sum(precio_total*cantidad) as total from comandas where month(fecha) = month(curdate())");
+        $query = Yii::$app->db->createCommand($expresion)->queryAll();
+        return $query;
+    }
+
+    public function gastosMensuales(){
+        $expresion = new Expression("select sum((productos.precio_compra * pedidos.cantidad)-(productos.precio_compra * pedidos.cantidad) *(descuento/100)) as total from pedidos left join productos on pedidos.id_producto = productos.id where month(fecha) = month(curdate())");
         $query = Yii::$app->db->createCommand($expresion)->queryAll();
         return $query;
     }

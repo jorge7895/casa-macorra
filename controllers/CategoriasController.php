@@ -54,12 +54,14 @@ class CategoriasController extends Controller
                 'pageSummary'=>'Total',
                 'pageSummaryOptions' => ['colspan' => 6],
                 'header'=>'',
-                'headerOptions'=>['class'=>'kartik-sheet-style']
+                'headerOptions'=>['class'=>'kartik-sheet-style'],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
             ],        
             [
                 'class' => 'kartik\grid\ActionColumn',
                     'dropdown' => 'dropdown',
-                    'dropdownOptions' => ['class' => 'float-right'],
+                    'dropdownOptions' => ['class' => 'float-center'],
                     'urlCreator' => function($action, $model, $key, $index) { 
                         return Url::toRoute([$action, 'id' => $model->id]); 
                     },
