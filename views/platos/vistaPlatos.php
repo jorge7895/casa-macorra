@@ -35,6 +35,7 @@ $model = new \app\models\Platos;
             </div>
         <?= ListView::widget([
         'dataProvider'=>$dataProvider,
+        'gridColumns'=>$gridColumns,
         'itemView'=>'_vistaPlatos',
         'summary'=>false,
         'options' => [

@@ -11,6 +11,7 @@ use yii\data\SqlDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Expression;
 
 /**
  * PlatosController implements the CRUD actions for Platos model.
@@ -148,7 +149,7 @@ class PlatosController extends Controller
         throw new NotFoundHttpException('La página solicitada no existe');
     }
     
-    public function actionReceta() {
+    public function actionReceta2() {
         
         $dataProvider = new ActiveDataProvider([
             'query' => Platos::find(),
@@ -158,21 +159,68 @@ class PlatosController extends Controller
            'dataProvider' => $dataProvider,
         ]);
     }
-    
-    public function actionMostrarrecetas(){
-        $platos = new ActiveDataProvider([
-            'query' => Platos::find(),
-        ]);
+
+    public function actionReceta() {
         
-        $ingredientes = new ActiveDataProvider([
-           'query'=> ProductosEnPlatos::find()->joinWith('productos'),
+            $gridColumns = [
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'ingredientes',
+                'label'=>'Ingredientes',
+                'pageSummary'=>'Total',
+                'pageSummaryOptions' => ['colspan' => 2],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [                
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'gr',
+                'label'=>'Gramos',
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+            [
+                'class'=>'kartik\grid\DataColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'attribute' => 'precio',
+                'label'=>'Precio',
+                'pageSummary'=>true,
+                'pageSummaryOptions' => ['colspan' => 6],
+                'hAlign' => 'center', 
+                'vAlign' => 'middle',
+            ],
+        ];
+        $expresion = new Expression("platos.id,platos.nombre,platos.categoria,productos.nombre as ingredientes, productos_en_platos.gramos_producto as gr, (productos_en_platos.gramos_producto*productos.precio_compra)/60 as precio");
+        $query = (new \yii\db\Query())->select($expresion)
+                ->from('productos_en_platos')
+                ->join('LEFT JOIN','platos', 'productos_en_platos.id_plato = platos.id')
+                ->join('LEFT JOIN','productos', 'id_producto = productos.id')
+                ->orderBy('productos_en_platos.id_plato');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            
+            'pagination' => [
+                'pageSize' => 10
+            ],
+             /*
+            'sort' => [
+                'defaultOrder' => [
+                    'año' => SORT_DESC,
+                ]
+            ],
+            */
         ]);
-        
-        return $this->render('vistaPlatos',[
-           'datos' => [
-               'platos'=>$platos,
-               'ingredientes'=>$ingredientes,
-               ],
+
+        return $this->render('vistaPlatos', [
+            'dataProvider' => $dataProvider,
+            'gridColumns'=>$gridColumns
         ]);
     }
+    
+
 }
