@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost:3306;dbname=cocina',
+    'dsn' => 'containers-us-west-60.railway.app:6609;dbname=cocina',
     'username' => 'root',
-    'password' => '',
+    'password' => 'hkqWrlgr6Vx79T3Wu22J',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
